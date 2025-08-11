@@ -1,0 +1,28 @@
+07.22 서브쿼리
+아키텍쳐, 패턴을 중요학습할 예정
+레디스..., 클러스터를 왜붙였냐?
+언리얼 서버랑 파이썬 서버랑 합쳐서 메타버스 만들면 서버터진다???
+프론트 백엔드 db
+무중단배포?
+auto increment 는 mariaDB에서는 켜져있으니 자바에서 꺼놔야한다
+
+
+확인사항
+exist 수업시간 9시 30분
+join, set operator 9시 50분
+회사 당황 12시 35분
+vertical partition - join
+horizontal partition - set operator 12시 40분
+front back db 2시 20분
+pk, 문법에러가 안나도 필수, 나중에 배울내용? 2시 33분
+
+
+
+하부르타
+exist
+join, set operator
+intersect 교집합
+in 연산자
+rollback
+replace
+truncate

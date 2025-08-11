@@ -1,0 +1,19 @@
+07.21 join
+
+mariadb는 nestedLoop를 기본적으로 채택
+	25개의 테이블A와 12개의 테이블 B에서 컬럼하나가 서로 비교하면 252번 비교해야한다
+쿼리문 조건연산자
+
+질문사항
+tbl_category에서 ref_category_code라고 나오지? 쿼리문은 category_code로 검색해도 나오는데?
+쿼리문에서 .을 모라고 표현하셨지? 조건연산자?
+
+
+확인사항
+on과 using
+다중 조인에서 outer join을 발생시키면 끝까지 outer join을 유지해 주어야 의미가 있다
+self join
+해싱알고리즘 -> N%3 0, 1, 2
+조인 캐시 레벨
+속도와 저장공간의 관계성, join casch level
+MariaDB이 쿼리를 실행하는 과정-노션자료, 설명해주신 부분 다시 확인
