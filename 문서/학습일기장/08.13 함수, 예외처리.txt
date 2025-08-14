@@ -1,0 +1,38 @@
+08.13 함수, 예외처리
+
+escape 
+	ex)\n, \t, \" \' \\
+printf
+string과 stringbuilder 차이점
+	System.identityHashCode(x);
+	String보다 Stringbuilder를 사용했을 때 메모리 절약가능
+		String은 추가되면 주소값이 추가되지만 StringBuilder은 주소값이 일정
+		문자열이 자주 변하면 String을 사용하면 비효율적
+	String은 불변객체, StringBuilder는 가변객체
+
+StringBuilder와 StringBuffer 차이점 - 동기화, 비동기화 차이
+메모리에 대한 정리
+StringBuilder가 가변인 이유
+래퍼클래스
+
+thread
+	사용자 한명당 thread 한명
+	멀티스레드 환경
+
+Calendar
+timepackage
+transient - 입출력에서 제외되는 것, 객체 입출력의 직렬화에서 제외(보안성)
+jdbc 전에 파일에 집어넣고 
+
+확인사항
+09:22 공간낭비에 대한 설명, 공간 복잡도
+09:26 취업에 대한 두개의 목표
+09:32 ~ 09:42 StringBuffer, 동기화
+10:35 valueOf , 효율적인 코드, 코테잘하는 사례 이야기
+11:09 그리니치 천문대
+11:30 자식객체와 getInstance()
+14:00 예외처리
+14:45 예외처리의 예외
+15:03 readObject()
+15:09 하나의 파일에 데이터 타입이 여러개일 때의 단점
+15:13 자율프로젝트
