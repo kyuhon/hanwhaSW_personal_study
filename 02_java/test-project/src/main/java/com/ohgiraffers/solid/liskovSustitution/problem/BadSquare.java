@@ -1,4 +1,4 @@
-package com.ohgiraffers.solid.liskovsustitution.problem;
+package com.ohgiraffers.solid.liskovSustitution.problem;
 
 public class BadSquare extends BadRectangle{
 

@@ -1,4 +1,4 @@
-package com.ohgiraffers.solid.liskovsustitution.resolved;
+package com.ohgiraffers.solid.liskovSustitution.resolved;
 
 public interface Shape {
     int getArea();

@@ -1,4 +1,4 @@
-package com.ohgiraffers.solid.liskovsustitution.resolved;
+package com.ohgiraffers.solid.liskovSustitution.resolved;
 
 public class Application {
     /* Rectangle과 Square는 다른 부분이 많으니 별도의 타입으로 정의하고
