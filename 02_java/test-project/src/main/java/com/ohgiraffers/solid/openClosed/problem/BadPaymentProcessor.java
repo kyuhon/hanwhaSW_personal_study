@@ -1,4 +1,4 @@
-package com.ohgiraffers.solid;
+package com.ohgiraffers.solid.openClosed.problem;
 
 public class BadPaymentProcessor {
     public void processPayment(String paymentType){

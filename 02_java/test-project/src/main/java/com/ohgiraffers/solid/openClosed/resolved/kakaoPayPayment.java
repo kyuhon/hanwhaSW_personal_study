@@ -1,4 +1,4 @@
-package com.ohgiraffers.solid.test.resolved;
+package com.ohgiraffers.solid.openClosed.resolved;
 
 public class kakaoPayPayment implements Payment {
     @Override
