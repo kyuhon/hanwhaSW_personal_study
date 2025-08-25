@@ -503,4 +503,21 @@ INSERT INTO cdeclaration (cdeclaration_num, cdeclaration_detail, cdeclaration_st
 	(3, '댓글 내용이 너무 공격적입니다.', 0, '2025-07-31 06:11:32', 3, 36, 30);
 
 
-
+SELECT * from cash;
+SELECT * from memberclaration;
+SELECT * from cdeclaration;
+SELECT * from postdeclaration;
+SELECT * from likementoring;
+SELECT * from file;
+SELECT * from dacomment;
+SELECT * from comment;
+SELECT * from post;
+SELECT * from message;
+SELECT * from review;
+SELECT * from record;
+SELECT * from schedule;
+SELECT * from matching;
+SELECT * from mentoringgoods;
+SELECT * from member;
+SELECT * from category;
+SELECT * from location;
