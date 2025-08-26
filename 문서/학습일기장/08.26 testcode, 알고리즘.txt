@@ -1,0 +1,86 @@
+08.26 testcode, 알고리즘
+
+@CsvSource
+@MethodSource
+ArgumentsProvider 인터페이스
+
+자바의 리플렉스 기술??
+
+알고리즘
+	적은 리소스를 써서 효율적으로 코드를 작성하기위한 학습
+	시간복잡도
+		lower bound - ex)Big-Omega notation : 최선의 경우를 산정해서 분석 , upper bound	
+		Big-O 표기법 : 최악의 경우를 산정해서 분석
+			점진적으로 데이터가 커짐에 따라서 비례적으로 어떻게 변하는지..
+	1억 = 1초??
+	NlogN 상대적으로 안정적(퀵 정렬, 병합 정렬, 힙 정렬)
+
+고정공간 ex) main 메소드, int num = 3
+가변공간 
+
+취업에 있어서는 공간 복잡도 할 필요없음 , 백만 배열을 쓰지 않는 이상 신경쓸 필요없음
+
+gis시스텀
+A+알고리즘
+
+
+확인사항
+09:12 csv파일에 공공데이터나 빅데이터와 같은 파일들을 가져오는데 사용하는데
+	뭘 한다고 말씀하셨지? 단어
+09:23 Arguments, 리플렉스 기술
+09:47 Big-O 표기법 한문장 정리한부분
+10:28 NlogN + logN 일 때 logN을 무시된다
+10:40 intelij 에서 옆에 코드실행에 따라 예를 들면 배열값이 어떻게 전달되는지 옆에 나오는 방법
+11:10 fibonacci는 stack구조와 유사하다
+14:41 퀵정렬, arr 하나만 가지고 인덱스만 바꿔주는 코드처리를 했다
+14:48 NlogN -> logN으로 쪼갠다??
+15:28 분할정복방법 마무리정리
+
+하브루타
+@CsvSource
+@MethodSource
+ArgumentsProvider 인터페이스
+
+
+시간복잡도 n^2
+버블정렬
+선택정렬
+삽입정렬
+
+퀵정렬
+
+힙정렬
+병합정렬
+
+/* BufferedReader를 활용하는 방법*/
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            int length = Integer.parseInt(br.readLine());
+            // 가급적 한줄을 문자열로 읽어 숫자로 바꿀 때는 Integer.valueOf 대신 Integer.parseInt 사용
+
+            /* 한줄 문자열 파싱하기 */
+            /* split 활용(정규표현식 해석으로 인해 StringTokenizer보다 시간이 약간 더 걸림)*/
+
+//            String[] strArr = br.readLine().split(" ");
+//            int[] arr = new int[length];
+//            for (int i = 0; i < strArr.length; i++) {
+//                arr[i] = Integer.parseInt(strArr[i]);
+//            }
+
+            /* StringTokenizer 활용*/
+//            StringTokenizer st = new StringTokenizer(br.readLine());
+//            int[] arr = new int[length];
+//            int index = 0;
+//            while(st.hasMoreTokens()){
+//                arr[index] = Integer.parseInt(st.nextToken());
+//                index++;
+//            }
+            /* Stream 활용*/
+            IntStream intStream = Arrays.stream(br.readLine().split(" "))
+                    .mapToInt(x -> Integer.parseInt(x));
+            int[] arr = intStream.toArray();
+            solution(length, arr);
+            System.out.println(length);
+            System.out.println(Arrays.toString(arr));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
