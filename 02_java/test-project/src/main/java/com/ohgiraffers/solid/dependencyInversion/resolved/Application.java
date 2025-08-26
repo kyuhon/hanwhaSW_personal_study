@@ -5,8 +5,8 @@ public class Application {
         MessageSender emailSender = new EmailSender();           
         MessageSender smsSender = new SMSSender();
         
-        NotificationSender emailService = new NotificationSender(emailSender);
-        NotificationSender smsService = new NotificationSender(smsSender);
+        NotificationService emailService = new NotificationService(emailSender);
+        NotificationService smsService = new NotificationService(smsSender);
         
         emailService.sendNotification("이메일로 발송 될 공지");
         smsService.sendNotification("SMS로 발송 될 공지");
