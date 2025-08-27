@@ -1,0 +1,110 @@
+sqld 
+
+함수이름과 사용
+
+check 
+
+이해를 도울 쿼리
+
+조인을 적게쓰면 데이터 조회성능이 증가한다?
+인덱스 생성
+테이블을 수직분할하면 한 개의 블록에 더 많은 인스턴스를 저장할 수 있게 된다
+Ltrim Rtrim
+Floor 과 trunc의 차이
+Mode의 두번째 매개변수가 음수일때 절대값을 가지나?
+Sysdate의 값은 문자열인가?
+포맷 형식의 문자형
+Escape
+118p 수학 평균점수
+equi조인은 inner조인에 포함된다
+중복값을 제거하는 명령어 -> distinct
+Left join - 오른쪽 테이블에 JOIN되는 데이터가 있든지 말든지 일단 나는 출력되고 본다는 식이라고 이해하면 쉽다.
+단, SELECT 절에서 USING 절로 정의된 컬럼 앞에는 별도의 ALIAS나 테이블명을 붙이지 않아야 한다.
+	USING = ON A.col = B.col 의 단축형 (컬럼명이 같을 때만 가능)
+150p
+SELECT COL1 FROM SAMPLE WHERE COL2 = NULL;
+	NULL과의 연산 결과는 False이므로 조건값이 늘 거짓이 되어 아무 데이터도 출력되지 않는다.
+0으로 나누면 null 발생
+NATURAL JOIN은 두 테이블에서 같은 이름을 가진 컬럼들이 모두 동일한 데이터를 가지고 있을 경우 JOIN
+이 되는 방식으로 공통 컬럼 앞에 테이블명이나 ALIAS를 붙이면 에러가 발생한다.
+order by
+	NULL값을 가장 큰 값으로 간주하여 정렬할 것인지 가장 작은 값으로 간주하여 정렬할 것인지는 DBMS마다 다르다.
+ISNULL()(SQL Server) ≒ NVL()(Oracle)
+ALAS를 별도로 지정해주지 않으면 컬럼명이 대문자로 출력된다.
+AVG 함수와 MAX 함수는 각각 NULL 값을 제외하고 계산된다.
+--
+SELECT SUM(COL) FROM SAMPLE HAVING SUM(COL) > 50;
+[SAMPLE 테이블]
+COL
+10
+20
+30
+
+공집합(No Rows)
+20
+360
+GROUP BY 절이 없으므로 에러가 발생한다.
+--
+만약 50이 아니라 70이면 공집합
+HAVING 절은 주로 GROUP BY 절 뒤에 오면서 집계 데이터에 대한 조건을 부여하지만 테이블 전체가 한 개
+의 그룹이 되는 경우 HAVING만 단독으로 사용할 수 있다.
+
+DML INSERT, UPDATE, DELETE, MERGE
+TCL COMMIT, ROLLBACK, SAVEPOINT
+DDL CREATE, ALTER, DROP, RENAME, TRUNCATЕ
+DCL CREATE USER, DROP USER, GRANT, REVOKE
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+NVL(a,b)
+	null인 경우 b 반환, 아니면 a 반환
+
+NVL2(a,b,c)
+	a가 null이 아니면 b 반환 , null이면 c 반환
+
+coalesce(a,b,c)
+	앞에부터 null값이 존재하면 그다음값이 반환
+	전부 null이면 null 반환
+
+NULLIF(인수1, 인수2) 
+인수1과 인수2가 같으면 NULL을 반환하고 같지 않으면 인수1을 반환해주는 함수
+
+SIGN은 해당 숫자가 양수면 1, 음수면 -1, 0이면 0을 출력
+
+DECODE(A, B, X, Y) A = B 이면 X를 출력, A ≠ B 이면 Y를 출력
+DECODE(A, B, X, C, Y, Z)
+	A = B이면 X 출력,
+	A = C이면 Y 출력,
+	A ≠ B 이고 A ≠ C이면 Z 출력
+
+SUBSTR
+	SELECT SUBSTR('HELLO WORLD', 1, 5) FROM DUAL;  -- HELLO
+	SELECT SUBSTR('HELLO WORLD', 7) FROM DUAL;     -- WORLD
+
+REPLACE
+	SELECT REPLACE('HELLO WORLD', 'L', 'X') FROM DUAL; -- HEXXO WORXD
+	SELECT REPLACE('HELLO WORLD', 'L') FROM DUAL;      -- HEO WORD
+
+CONCAT
+	SELECT CONCAT('HELLO', ' WORLD') FROM DUAL; -- HELLO WORLD
+	SELECT 'HELLO' || ' ' || 'WORLD' FROM DUAL; -- HELLO WORLD
+
+TRIM 양쪽 공백 제거
+
+SELECT ROUND(7,59, 1) FROM DUAL:
+SELECT FLOOR(8,29) FROM DUAL;
+SELECT CEIL(7,59) FROM DUAL;
+SELECT TRUNC(7,59) FROM DUAL;
+① 지정된 소수점 자릿수까지 반올림하여 반환해주는 함수이므로 소수점 첫째 자리까지 반올림되어 7.60
+② 소수점 이하의 수를 버림한 정수를 반환하므로 8
+③ 소수점 이하의 수를 올림한 정수를 반환하므로 8
+④ 지정된 소수점 자릿수까지 버림하여 반환해주는 함수이며, 자릿수를 명시하지 않았을 경우 기본값은 0이
+므로 7
+
+우선순위
+() -> not -> and -> or
+
+
+
+chapter 1. 기출변형 모의고사
+

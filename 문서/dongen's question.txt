@@ -1,7 +1,5 @@
 dongen's question
 
-
-
 select member_role, member_name, member_rating
      from member
      where member_rating is not null;
