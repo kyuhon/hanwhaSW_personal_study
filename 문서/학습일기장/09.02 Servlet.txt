@@ -16,6 +16,7 @@ controller
 	validation체크
 intelij에서 새 프로젝트 만들 때 artifact
 	빌드 결과물을 어떻게 패키징할지를 정의
+stack trace
 
 확인사항
 	9:00 ~ 10:00 Servlet 초기 설명
@@ -32,3 +33,7 @@ intelij에서 새 프로젝트 만들 때 artifact
 	응답헤더 -> Transfer-encoding -> chunked
 14:05 webapp
 14:18 polling방식 - 서버에 요청을 보내는 방식...
+14:35 주석이 노출되는 것과 아닌것
+14:42 front와 제일 연관되는 부분, <web-app>
+15:19 포워딩
+15:36 action="forward"
