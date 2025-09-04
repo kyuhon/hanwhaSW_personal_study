@@ -37,3 +37,5 @@
 09.02 msp(management service provider)사
 09.03 전화번호부 이름, 지역별
 			관리자 수정모드
+09.04 텔로미어
+	jpa와 모델링
