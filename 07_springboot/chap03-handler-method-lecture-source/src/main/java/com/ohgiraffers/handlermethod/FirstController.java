@@ -1,14 +1,19 @@
 package com.ohgiraffers.handlermethod;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.Map;
 
 @Controller
 @RequestMapping("/first")
+/* 설명. 이 Controller 클래스의 핸들러 메소드에서 Model에 "id" 또는 "name"이 키 값으로 담기면 HttpSession에 추가하라는 어노테이션 */
+/* 설명. HttpSession에서 제공하는 invalidate()가 아닌 SessionStatus에서 제공하는 setComplete()을 통해서만 만료할 수 있다.*/
+@SessionAttributes(names={"id","name"}) //SessionTest2메소드에 사용
 public class FirstController {
     /* 설명. 핸들러 메소드에서 반환형이 없을 경우 요청경로를 반환한다.(요청 경로가 곧 view) */
 //    @GetMapping("/first/regist")
@@ -89,5 +94,51 @@ public class FirstController {
     public String searchMenu(@ModelAttribute MenuDTO menu){ //bean이 아닌 커맨드객체
         System.out.println("menu = " + menu);
         return "first/serchResult";
+    }
+
+    @GetMapping("/login")
+    public void login(){}
+
+    @PostMapping("login")
+    public String sessionTest1(String id, String pwd, HttpSession session){ //request.getSession()에서 값을 넘겨준다
+        System.out.println("id = " + id);
+        System.out.println("pwd = " + pwd);
+        /* 설명. 넘어온 id와 pwd를 활용해 실제 DB에서 회원 조회를 성공했다는 가정 */
+        session.setAttribute("id", id);
+        session.setAttribute("pwd", pwd);
+        session.setAttribute("name", "홍길동");
+        return "first/loginResult";
+    }
+
+    @GetMapping("logout1")
+    public String logoutTest1(HttpSession session){
+        session.invalidate();
+
+        return "first/loginResult";
+    }
+
+    @PostMapping("login2")
+    public String sessionTest2(Model model, String id){
+        model.addAttribute("id", id);
+        model.addAttribute("name","홍길동");
+        return "first/loginResult";
+    }
+
+    @GetMapping("logout2")
+    public String logoutTest2(SessionStatus sessionStatus){
+        sessionStatus.setComplete();
+        return "first/loginResult";
+    }
+
+    @GetMapping("body")
+    public void body(){}
+
+    @PostMapping("body")
+    public void bodyTest(@RequestBody String body,
+                           @RequestHeader("content-type") String contentType,
+                           @CookieValue(value="JSESSIONID") String sessionID){
+        System.out.println("body = " + body);
+        System.out.println("contentType = " + contentType);
+        System.out.println("sessionID = " + sessionID);
     }
 }
