@@ -1,0 +1,33 @@
+09.09
+
+외부라이브러리 -> Gradle: org.springframework.boot:spring-boot-autoconfigure:3.5.5
+	-> spring-boot-au
+
+html, css, js, images -> 정적 리소스에 담김
+
+static - 정적
+templates - 동적
+
+@getMapping이나 @requestMapping은 @Controller가 존재하기에 사용 가능하다
+
+스피너 
+option 태그 속성에 타입을 number라고 하면 화면에 나오는 위,아래 화살표
+
+커맨드객체??
+서버사이드랜더링... 모랑 비교해서 설명해주셨는데...
+
+확인사항
+09:03 handlerAdapter -> Model, 영상 이미지 체크
+	Handler Mapping - K-V형식
+	handlermethod
+	filter
+	intercepter
+	오늘 다룰 학습내용들
+
+09:20 Dispatcher Servlet -> View Resolver
+		classpath:/templates/
+		.html
+
+09:40 ~ 09:47 HttpServletRequest
+10:18 @requstParam 생략 가능
+10:36 커맨드객체를 위한 DTO ******
