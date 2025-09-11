@@ -6,6 +6,6 @@ import java.util.List;
 
 public class MenuDAO {
     public List<MenuDTO> selectAllMenus(SqlSession sqlSession){
-        return sqlSession.selectList("MenuDAO.selectAllMenus");
+        return sqlSession.selectList("MenuMapper.selectAllMenus");
     }
 }

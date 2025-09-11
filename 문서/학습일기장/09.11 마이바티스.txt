@@ -10,6 +10,7 @@ mapper.xml
 	syntax에러 시 쿼리 mapper확인
 	
 
+
 확인사항
 09:03 기획 -> 설계
 	기능,화면,데이터
