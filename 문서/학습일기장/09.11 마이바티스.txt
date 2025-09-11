@@ -4,6 +4,7 @@ connection pool 활용
 	db가 오가는 길을 미리 만들어놓고
 	사용자가 필요할 때 바로 사용할 수 있게 설정해주는 것
 	히카리시피..
+	리소스에 따른 차이 확인해보기
 
 mapper.xml
 	syntax에러 시 쿼리 mapper확인
@@ -14,3 +15,4 @@ mapper.xml
 	기능,화면,데이터
 09:32 마이바티스 동작구조
 10:04 매퍼 설정
+10:37 Configuration에서 addMapper 매개변수에 클래스를 추가했을 때 동작 방식
