@@ -19,6 +19,12 @@ public class Application {
                 case 1:
                     ifSubMenu();
                     break;
+                case 2:
+                    chooseSubMenu();
+                    break;
+                case 3:
+                    foreachSubMenu();
+                    break;
                 case 9:
                     System.out.println("프로그램을 종료합니다.");
                     return;
@@ -26,6 +32,37 @@ public class Application {
                     System.out.println("번호를 잘못 입력하셨습니다.");
             }
         }while(true);
+    }
+
+    private static void foreachSubMenu() {
+        Scanner sc = new Scanner(System.in);
+        MenuService ms = new MenuService();
+    }
+
+    private static void chooseSubMenu() {
+        Scanner sc = new Scanner(System.in);
+        MenuService ms = new MenuService();
+        do {
+            System.out.println("===== choose 서브 메뉴 =====");
+            System.out.println("1. 카테고리 상위 분류별 메뉴 보여주기(식사, 음료, 디저트)");
+            System.out.println("9. 이전 메뉴로");
+            System.out.println("메뉴 번호를 입력해 주세요: ");
+            int input = sc.nextInt();
+            switch (input){
+                case 1:
+                    ms.searchMenuBySubCategory(inputSubCategory());
+                    break;
+                case 9:
+                    return;
+            }
+        } while(true);
+    }
+
+    private static SearchCriteria inputSubCategory() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("메뉴의 상위 분류를 입력해 주세요(식사, 음료, 디저트): ");
+        String value = sc.nextLine();
+        return new SearchCriteria("category", value);
     }
 
     private static void ifSubMenu() {

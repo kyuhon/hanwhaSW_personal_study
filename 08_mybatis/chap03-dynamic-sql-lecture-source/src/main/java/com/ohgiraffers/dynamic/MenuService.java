@@ -30,4 +30,15 @@ public class MenuService {
 
         sqlSession.close();
     }
+
+    public void searchMenuBySubCategory(SearchCriteria searchCriteria) {
+        SqlSession sqlSession = getSqlSession();
+        MenuMapper mapper =
+                sqlSession.getMapper(MenuMapper.class);
+
+        List<MenuDTO> menus = mapper.searchMenuBySubCategory(searchCriteria);
+        menus.forEach(System.out::println);
+
+        sqlSession.close();
+    }
 }

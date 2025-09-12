@@ -31,3 +31,17 @@ jpa 쿼리작성은 길어질수록 사용목적이 사라진다
 10:28 resource에서 xml파일을 설정할 때 namespace를 잘못 입력하거나 패키지의 디렉토리를 잘못 설정하면
 	인식하지 못함(마이바티스에서 그렇게 설정한 부분)
 10:39 preparedstatement ${} 그리고 ~#{}:
+12:40 OGNL(Object Graph Navigation Language)
+15:10 criteria 2개 이상의 키,밸류를 담기 위한 메소드
+
+하브루타
+
+properties파일은 애플리케이션에 필요한 설정값을 따로 관리하기 위해 사용
+<resultMap> 안의 <result> 태그에서 property속성과 column속성을 사용했는데
+	sql에서 column에 있는 값의 컬럼을 가져와서 property 값의 속성에 매핑한다는 뜻
+		property는 매핑할 자바 객체의 필드명(DTO, VO)으로
+		마이바티스가 결과를 DTO 객체로 변환할 떄 값을 넣어줄 자바 객체의 필드명
+SqlSession은 마이바티스 매퍼에 등록되 sql을 호출하고 실행해줌
+
+where 태그
+	and는 필요하면 활용하고 없으면 무시
