@@ -15,7 +15,9 @@
             </dataSource>
         </environment>
     </environments>
-<!--    <mappers>-->
-<!--        <mapper resource=""/>-->
-<!--    </mappers>-->
+<!-- 설명. mapper들이 존재하는 패키지로 한번에 등록 가능(remix 방식만 해당, xml방식의 설정에 쿼리는 자바클래스로 하면 가능) -->
+    <mappers>
+        <!--<mapper resource="com/ohgiraffers/dynamic/MenuMapper.xml"/>-->
+        <package name="com.ohgiraffers.dynamic"/>
+    </mappers>
 </configuration>

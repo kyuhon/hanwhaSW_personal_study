@@ -1,5 +1,9 @@
 09.12 
 
+단어검색
+	동적쿼리
+	추상메소드
+
 chap02
 section01에서 xmlconfig를 설정하는것과 달리 section02에서 java로 config를 설정하는 방법에서 인터페이스의 추상메소드를 호출해서 사용하는 방식으로 변경됨 
 이번 프로젝트는 section03처럼 사용한다
@@ -17,6 +21,7 @@ context bounded
 
 jpa 쿼리작성은 길어질수록 사용목적이 사라진다
 
+바인딩 에러
 
 확인사항
 09:00 context bounded ***********
@@ -25,5 +30,4 @@ jpa 쿼리작성은 길어질수록 사용목적이 사라진다
 10:16 자바의 장점과 xml의 장점
 10:28 resource에서 xml파일을 설정할 때 namespace를 잘못 입력하거나 패키지의 디렉토리를 잘못 설정하면
 	인식하지 못함(마이바티스에서 그렇게 설정한 부분)
-10:39 preparedstatement ${} 그리고 ~#{}
-	
+10:39 preparedstatement ${} 그리고 ~#{}:
