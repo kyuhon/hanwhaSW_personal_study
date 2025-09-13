@@ -1,0 +1,9 @@
+vworldAPI
+
+https://api.vworld.kr/req/data?service&request=GetFeature&data=
+www.test.com/test.html
+65C7BF2F-C3B9-3646-B04D-300E5A923DC7
+
+geomFilter
+attrFilter
+crs
