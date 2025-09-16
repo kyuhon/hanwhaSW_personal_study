@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.ohgiraffers'
 version = '0.0.1-SNAPSHOT'
-description = 'chap01-mybatis-spring-lecture-source'
+description = 'chap02-transactional-lecture-source'
 
 java {
     toolchain {
