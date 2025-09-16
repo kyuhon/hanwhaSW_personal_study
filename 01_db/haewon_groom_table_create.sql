@@ -1,4 +1,4 @@
--- create database groom;
+tbl_menutbl_menu-- create database groom;
 -- use groom;
 
 DROP TABLE IF EXISTS cash;
