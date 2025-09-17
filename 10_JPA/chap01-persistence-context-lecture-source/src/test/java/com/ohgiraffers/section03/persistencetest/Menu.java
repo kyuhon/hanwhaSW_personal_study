@@ -1,13 +1,29 @@
-package com.ohgiraffers.section01.problem;
+package com.ohgiraffers.section03.persistencetest;
 
-public class MenuAndCategory {
+import jakarta.persistence.*;
+
+@Entity(name="section03_menu")
+@Table(name="tbl_menu")
+public class Menu {
+    @Id
+    @Column(name="menu_code")
+    //   @GeneratedValue(strategy = GenerationType.IDENTITY)   // auto_increment 활용
     private int menuCode;
+
+    @Column(name="menu_name")
     private String menuName;
+
+    @Column(name="menu_price")
     private int menuPrice;
-    private Category category;
+
+    @Column(name="category_code")
+    private int categoryCode;
+
+    @Column(name="orderable_status")
     private String orderableStatus;
 
-    public MenuAndCategory() {
+    public Menu() {
+
     }
 
     public int getMenuCode() {
@@ -34,12 +50,12 @@ public class MenuAndCategory {
         this.menuPrice = menuPrice;
     }
 
-    public Category getCategory() {
-        return category;
+    public int getCategoryCode() {
+        return categoryCode;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryCode(int categoryCode) {
+        this.categoryCode = categoryCode;
     }
 
     public String getOrderableStatus() {
@@ -49,10 +65,8 @@ public class MenuAndCategory {
     public void setOrderableStatus(String orderableStatus) {
         this.orderableStatus = orderableStatus;
     }
-
     @Override
     public String toString() {
-       return super.toString();
+        return super.toString();
     }
-
 }
