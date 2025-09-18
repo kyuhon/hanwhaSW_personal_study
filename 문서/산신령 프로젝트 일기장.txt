@@ -1,5 +1,11 @@
 산신령 프로젝트 일기장
 
+호스트명: database-2.cbgyygo0sg4k.ap-southeast-2.rds.amazonaws.com
+포트번호: 3306
+아이다: bughunters
+비밀번호: bughunters
+
+
 09.15
 
 지도 api 구현과정
@@ -14,9 +20,8 @@
 신고테이블들 정리하기
 api 사용해야할 부분 체크
 
+
 09.16
-
-
 
 
 수정사항
@@ -29,4 +34,13 @@ api 사용해야할 부분 체크
 
 크루구성원 테이블
 크루 탈퇴여부 컬럼을 크루 가입 요청 거부 컬럼과 합치기
+크루 구성원 테이블 존재성 확립하기
  
+
+
+09.17
+softdelete, harddelete
+
+varchar check y,n으로 통일
+제약조건 이름 통일성있게 명칭짓기
+인덱스는 프로젝트 진행하다 추후에
