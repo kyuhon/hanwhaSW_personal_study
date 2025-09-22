@@ -1,0 +1,8 @@
+07.18 mariadb
+
+gui 환경 - workbench, intellij vsCode
+쿼리 - sql의 구조화된 질의
+
+@ - at
+% 외부컴퓨터에서 접속할 수 있게 설정
+

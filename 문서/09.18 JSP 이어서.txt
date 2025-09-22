@@ -1,0 +1,31 @@
+09.18 JSP 이어서
+
+xml파일 리소스 추가...에서 리소스
+
+auto ddl은 학습하지만 이번 프로젝트는 모델링을 끝내고 DTO를 설정하는거기 때문에 사용하지 않는다
+
+@Embeddable
+	Embeddable 타입은 하나의 값의 묶음이자 불변 객체로 다루는 타임이다.
+	(불변 객체: setter가 없고 필드값에 변화가 생기면 새로운 객체를 생성해야 하는 객체)
+	그리고 (equals/hashCode)를 오버라이딩 해야 한다.
+	VO와 유사하며 @EmbeddedID로 복합키로 표현하고자 할 때 쓰기도 한다.
+@EmbeddedId
+
+강사님 추천 - 복합키가 들어가는걸 추천
+	
+
+확인사항
+09:03 보충설명
+	PK전략을 GenerationType.IDENTITY로 가져가면 persist 시점에 insert가 무조건 발생한다(즉시 flush호출)
+09:31 @Enumerated, 자바에서 체크 제약조건처럼 만들 수 있음
+10:36 포폴에 복합키 사용부분
+10:39 @ManyToOne -> Category 사용		*********
+	@OneToMany -> List<Menu> 사용
+	@ManyToOne - @OneToMany(mappedby)
+		기본적으로 순환참조가 발생하는 구조
+	연관관계의 주인은 자식이다, 연관관계 주인에 의해서 매핑해야한다
+11:27 chap03 - MenuAndCategory클래스에 tostring에 category를 주석하는 부분
+	주석했을 때 조인에 대한 where절이 삭제됨
+12:20 두개의 테이블 관계에 대한 설명, CategoryAndMenu와 Menu
+
+

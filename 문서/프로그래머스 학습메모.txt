@@ -1,0 +1,49 @@
+프로그래머스 학습메모
+
+String
+	str.length() - 문자열길이, int타입 반환
+
+	str.charAt() - 인덱스로 문자추출, char타입 반환
+
+	str.equals(String other) - 문자열 값 비교, boolean타입 반환
+	str.equalsIgnoreCase(String other) - 대소문자 무시 비교, boolean타입 반환
+	str.compareTo(String other) - 사전순 비교(같으면 0, 앞서면 음수, 뒤면 양수), int타입 반환
+
+	str.substring(int beginIndex) - 끝까지 추출, String타입 반환 
+	str.substring(int beginIndex, int endIndex) - start ~ end -1 구간 추출, String타입 반환
+
+	str.indexOf(String ch) - 처음 등장 위치, int타입 반환(못 찾으면 -1)
+	str.lastIndexOf(String ch) - 마지막 등장 위치, int타입 반환
+	str.contains(CharSequence s) - 포함 여부 true/false, boolean타입 반환
+	str.startsWith(String prefix) - 접두사 확인, boolean타입 반환
+	str.endsWith(Spring suffix) - 접미사 확인, boolean타입 반환
+
+	str.toUpperCase() - 대문자 변환, String타입 반환
+	str.toLowerCase() - 소문자 변환, String타입 반환
+	str.trim() - 앞뒤 공백 제거, String타입 반환
+	str.replace(CharSequence target, CharSequence replacement) - 문자열 치환, String타입 반환
+	str.replaceAll(String regex, String replacement) - 정규식 치환, String타입 반환
+	String.valueOf(int/long/double/char/boolean/객체) -> String타입 반환
+
+	.split(String regex) - 문자열 배열 반환, String[]타입 반환
+	.split(String regex, int limit) - String[]타입 반환
+		limit > 0 : 최대 limit개로 나눔, 마지막 조각에 나머지 포함
+		limit = 0 : 마지막 빈 문자열 제거
+		limit < 0 : 제한 없이 나누고, 마지막 빈 문자열도 포함
+
+	"a" + "b" - 간단 연결, String타입 반환
+	.concat(String other) - String타입 반환
+	.join(CharSequence delimiter, CharSequence... elements) - String타입 반환
+
+	str.toCharArray() - char[]타입 반환
+
+	코테에서 많이 쓰는 패턴
+	split() + parseInt() : 입력 처리
+	charAt() + for문 : 문자 단위 탐색
+	substring() : 문자열 슬라이싱
+	replaceAll() : 정규식으로 필터링
+	StringBuilder : 문자열 뒤집기, 효율적 조작
+
+	Integer.parseInt(String s) → 문자열 -> int
+	Double.parseDouble(String s) → 문자열 -> double
+

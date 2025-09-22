@@ -1,0 +1,42 @@
+09.02 Servlet
+
+@WebServlet
+반응형 웹 확인하는 방법 - 개발자 도구에서
+쿠키와 세션 차이 확인하기
+jakarta.servlet.http.HttpServlet
+	Http 프로토콜을 담당하는 서블릿
+RestAPI
+crtl + O 재정의 메소드 선택
+ssr -> csr
+웹퍼블리셔: html이랑 css 사용하는 직업
+focus가 풀리는걸 blur이벤트
+cheat sheet - 홈페이지
+controller 
+	사용자가 받은 값을 1차 가공처리
+	validation체크
+intelij에서 새 프로젝트 만들 때 artifact
+	빌드 결과물을 어떻게 패키징할지를 정의
+stack trace
+
+확인사항
+	9:00 ~ 10:00 Servlet 초기 설명
+09:26 servlet mapping
+09:30 build.gradle
+09:45 개발자 도구, request method - get요청
+10:25 post방식했을 때 sout 깨지는 현성
+		-> vm option 설정
+10:45 markdown 랭귀지 -> xml, html
+11:30 http 500
+11:46 post방식 -> 개발자도구 -> payload
+12:12 요청 헤더
+12:40 톰켓9 이전에서는 html태그를 보내면 그대로 찍혔었는데 톰켓10에서는 해석해준다??
+	응답헤더 -> Transfer-encoding -> chunked
+14:05 webapp
+14:18 polling방식 - 서버에 요청을 보내는 방식...
+14:35 주석이 노출되는 것과 아닌것
+14:42 front와 제일 연관되는 부분, <web-app>
+15:19 포워딩
+15:36 action="forward"
+
+
+

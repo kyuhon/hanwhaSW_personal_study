@@ -1,0 +1,27 @@
+08.25 solid, unittest
+
+이번주는 코딩테스트 학습
+다음주부터 기획 DDD설계
+
+개방-폐쇄 원칙(Open-Closed Principle)
+유스케이스를 빼고 테스트케이스를 2차 프로젝트에서 사용
+IllegalArgumentException은 runtimeException을 상속받아서 굳이 throw를 던질 필요는 없다
+Maven Repository
+github actions -> 테스트코드가 승인되야 깃허브로 넘어간다?
+
+
+
+확인사항
+09:20 인터페이스를 사용하여 은닉화 
+	processPayment(Payment payment)를 사용하여 Payment 인터페이스를 이행한
+	CreditCardPayment와 KakaoPayPayment의 클래스를 사용
+10:34 의존관계, 강한 결합
+11:17 의존성 역전 원칙
+11:27 TDD(Test Driven Development)
+14:10 예외처리 Assertions.assertAll(); 코드를 기반으로 설명한 부분
+15:08 여러 요소를 순회하며 stream 문법처럼 filtering을 걸어서 단정문을 작성
+15:24 실제 코드와 테스트코드의 패키지가 같으면 import를 안시켜도 같다고 인식한다
+15:41 테스트 코드 선작업
+
+질문사항
+테스트했을 때 build폴더에 있는 html이 내가 한 오류검사를 지정은 어떻게 되고, 언제부터 반영되는지

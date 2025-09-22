@@ -1,0 +1,43 @@
+08.19 Map인터페이스, Properties
+
+HashMap
+	map과 set
+		키만 set으로 - KeySet
+		키와 맵을 set으로 - EntrySet
+	Map에 담긴 값을 순회해서 확인하는 방법
+		1. KeySet()을 활용해 Key를 Set으로 바꾸고 iterator를 돌리는 방법
+		2. entrySet()을 활용하는 방법(Key와 value를 묶은 Entry 타입을 통해 key 없이 value 추출 가능)
+
+Hashtable LinkedHashMap TreeMap
+순서 동기화 정렬
+
+Properties
+	많은 동기화가 걸려도 하나씩 취급??
+
+Properties -> xml -> Annotation -> yml(yaml)
+
+객체 출력스트림 개선작업
+
+객체 입출력할 때는 Serializable를 클래스에 이행해주어야함
+
+확인사항
+09:16 엔트리타입, 제네릭타입
+09:23 hashcode, equal을 사용해서 객체를 비교하여 VO, DTO에서 많이 사용
+09:24 동기화처리에 속도가 느려지는 부분 체크
+09:30 환경변수만 다루는 서버
+	Properties -> XML -> Annotation 외부 리소스와 파일입출력에 용이
+09:42 properties 내부 설명
+10:29 레이지 싱글톤
+11:14 클래스의 메타데이터
+11:22 갤러그, 하나의 프로세스에 멀티 쓰레드를 사용하여 하나의 리소스로...
+11:28 Header 출력을 없애면 객체 이어쓰기가 가능하다
+11:34 Header 출력을 없애기 위한 ObjectOutputStream의 재구현
+11:45 배열의 문제를 해결하기 위한 ArrayList 
+12:04 Layered Architecture, 3-tier-architecture
+12:20 MemberService와 MemberRepository의 의존관계
+12:45 먼저 시작되는 메소드
+14:08 캐싱용도??
+14:26 객체를 한개만 생성하는 이유, 캐싱의 의미 ***********************
+
+질문사항
+하나의 서비스에 여러개의 db를 사용할 이유가 있을까?

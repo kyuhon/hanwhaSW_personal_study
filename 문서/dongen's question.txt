@@ -1,0 +1,20 @@
+dongen's question
+
+select member_role, member_name, member_rating
+     from member
+     where member_rating is not null;
+
+select rating_mentor, rating_mentee, member_id, mentoring_id from matching;
+-- rating_mentor 서치했을때, 멘토의 평점이 나와야함
+-- 여기서 rating_mentee > 멘티가 멘토한테 부여 한 컬럼인건지
+-- 아니면 컬럼명을 바꿔썼다던지
+
+SELECT * FROM member;
+
+SELECT * FROM matching;
+
+INSERT INTO file (
+    file_name, file_type, file_rename, file_path, file_order, post_id
+) VALUES (
+    'image.jpg', 'image/jpeg', '20250801_abc123.jpg', '/uploads/20250801/', 1, 10
+);

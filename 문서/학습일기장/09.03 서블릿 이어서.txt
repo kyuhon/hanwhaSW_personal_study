@@ -1,0 +1,60 @@
+09.03 서블릿 이어서
+
+getAttribute
+getParameter
+
+StringBuilder
+
+포워딩
+쿠키와 세션
+JSESSIONID
+filter
+HttpServletRequestWrapper
+
+확인사항
+09:10 로그인 클릭 시 톰켓간의 연결관계
+	톰켓 서블릿끼리 무연결, 무상태성으로 분리 상태
+09:18 redirect()
+		sendRedirect(302코드)
+09:35 포트번호 연동
+09:38 redirect() 재설명
+09:48 controller 계층과 serverSideRendering
+	controller 계층이 하는 일
+10:25 개발자도구 쿠키값확인 - network, application확인
+10:30 Session
+		redirect가 상태가 유지안되는 문제가 있다...
+11:17 데이터 상태 저장
+11:35 JSESSIONID와 그것을 숨기는 기술
+11:43 filter chain - filter를 중첩하는 기술, 목적은 여러목적으로 사용
+12:16 ServletRequest의 인코딩과 암호화
+12:38 TCP 3way handshake
+	 OSI 7 계층과 TCP/IP Protocol
+14:45 loging과 security 의존성 추가
+
+개인 학습
+
+로깅
+	정보를 제공하는 일련의 기록인 로그(log)를 생성하도록 시스템을 작성하는 활동
+
+filter를 사용하는 이유
+	공통 기능을 분리해서 재사용
+		여러 서블릿에서 JSP에서 공통적으로 필요한 작업을 각각에 넣는 대신, 필터에 모아둠
+		ex) 요청 인코딩, 응답 압축, 캐싱 설정, 로깅
+	보안 및 인증 처리
+		로그인 여부, 권한 체크 같은 공통 보안 처리를 개별 서블릿 코드에 넣지 않고 필터에서 한 번에 처리
+		ex) 로그인 안 한 사용자가 /mypage요청 -> 필터에서 로그인 여부 검사 후 /login으로 redirect
+			redirect - 사용자가 요청한 url이 아닌 다른 url로 자동으로 이동하는 웹 기술
+	요청과 응답을 가로채서 가공
+		필터는 서블릿이 실행되기 전/후에 동작
+		서블릿 실행 전 -> 요청 데이터 가공 가능, 서블릿 실행 후 -> 응답 데이터 가공 가능
+		ex) xss 공격 방지를 위해 요청 파라미터 필터링
+			xss(크로스 사이트 스크립팅) 웹사이트 취약점을 이용해 사용자의 브라우저에서
+			악성 스크립트를 실행하는 공격 기법
+		    응답 HTML에 공통적인 footer 추가
+	관심사의 분리
+		서블릿은 비즈니스 로직에 집중하고 필터는 부가기능(로깅, 보안, 인코딩)에 집중
+	체인 방식으로 유연하게 적용
+		여러 개의 필터를 체인 형태로 연결
+		EncodingFilter -> AuthFilter -> LoggingFilter -> 실제 Servlet -> LoggingFilter
+		-> AuthFilter -> EncodingFilter
+

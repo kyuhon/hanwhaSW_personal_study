@@ -1,0 +1,22 @@
+### GET request hello
+GET localhost:8080/response/hello
+
+### GET request random
+GET localhost:8080/response/random
+
+### GET request message
+GET localhost:8080/response/message
+
+### GET request test
+GET localhost:8080/response/test
+
+### GET request image (1. byte[] 방식) - 작은 파일
+GET http://localhost:8080/response/image/bytes/pikachu
+
+### GET request image (2. WebConfig 방식) - 바뀌지 않음
+GET http://localhost:8080/response/image/charmander.png
+
+### GET request image (2. Resource 방식, 부분 동작, 캐시 비활성화, Http 1.0과 호환 가능(Pragma)) - 큰 파일
+GET http://localhost:8080/response/image/resource/squirtle.png
+Cache-Control: no-cache
+Progma: no-cache

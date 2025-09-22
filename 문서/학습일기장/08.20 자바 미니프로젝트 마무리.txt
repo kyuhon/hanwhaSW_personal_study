@@ -1,0 +1,18 @@
+08.20 자바 미니프로젝트 마무리
+
+전달인자가 많으면 리팩토링할 징조로 본다
+
+
+확인사항
+09:07 책임, 역할, 협력
+09:18 depth 객체안에 객체의 층이 깊어진다, 배열복사
+	취미의 경우는 배열이므로 깊은 복사를 해 주어야 한다
+09:32 selectMember
+10:03 memberRepository.modifyMember
+10:18 ms.removeMember(chooseMemNo())
+10:28 
+
+
+질문사항
+객체가 널일때 nullpoiterexception발생 -> 모든객체가 그런가?
+

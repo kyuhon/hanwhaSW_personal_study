@@ -1,0 +1,10 @@
+07.17 깃허브, uml
+repo - general - dicussion
+기능개발용 issue tamplet - 영상확인하기 9~10시
+everything
+스택 오버플로우
+
+질문사항
+폴더와 디렉토리의 차이가 모지?
+애플리케이션 - 컴퓨터의 OS(윈도우, 리눅스,macOS 등)위에서 프로그램
+	os위에서 진행한다가 무슨뜻이지?

@@ -1,0 +1,56 @@
+09.12 마이바티스 이어서
+
+단어검색
+	동적쿼리
+	추상메소드
+
+chap02
+section01에서 xmlconfig를 설정하는것과 달리 section02에서 java로 config를 설정하는 방법에서 인터페이스의 추상메소드를 호출해서 사용하는 방식으로 변경됨 
+이번 프로젝트는 section03처럼 사용한다
+DB centric
+
+context bounded
+	monolith 서버로 묶는것에서 시작한다
+	처음에는 회원과 그 외의 것으로 묶는다
+	논리적 분리, 물리적 하나
+	JPA에서의 문제 때문에 
+	JPA의 장점을 살려서 나눠서 모듈화할 수 있어야 한다
+
+2주 -> 모놀리스 - JPA, mybatis, cqrs
+마이바티스 동적쿼리 사용
+
+jpa 쿼리작성은 길어질수록 사용목적이 사라진다
+
+바인딩 에러
+
+확인사항
+09:00 context bounded ***********
+대략 09:10 xml설정을 자바설정으로 바꾸는 과정에 대한 맥락 파악하기
+10:09 cqrs 학습 진행과정 **************
+10:16 자바의 장점과 xml의 장점
+10:28 resource에서 xml파일을 설정할 때 namespace를 잘못 입력하거나 패키지의 디렉토리를 잘못 설정하면
+	인식하지 못함(마이바티스에서 그렇게 설정한 부분)
+10:39 preparedstatement ${} 그리고 ~#{}:
+12:40 OGNL(Object Graph Navigation Language)
+15:10 criteria 2개 이상의 키,밸류를 담기 위한 메소드
+
+하브루타
+
+properties파일은 애플리케이션에 필요한 설정값을 따로 관리하기 위해 사용
+
+doctype 선언
+	xml문서가 어떤 규칙을 따르는지 알려주는 역할
+<resultMap> 안의 <result> 태그에서 property속성과 column속성을 사용했는데
+	sql에서 column에 있는 값의 컬럼을 가져와서 property 값의 속성에 매핑한다는 뜻
+		property는 매핑할 자바 객체의 필드명(DTO, VO)으로
+		마이바티스가 결과를 DTO 객체로 변환할 떄 값을 넣어줄 자바 객체의 필드명
+SqlSession은 마이바티스 매퍼에 등록되 sql을 호출하고 실행해줌
+
+xml파일 데이터를 구조화하고 시스템 간에 교환하기 위한 표준적인 형식
+
+
+
+
+
+where 태그
+	and는 필요하면 활용하고 없으면 무시

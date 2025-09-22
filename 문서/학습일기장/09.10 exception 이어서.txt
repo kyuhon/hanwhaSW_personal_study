@@ -1,0 +1,23 @@
+09.10 exception 이어서
+
+String str =null;
+str.charAt(0);
+예외처리에 enum타입을 사용한다??
+filter와 interceptor의 차이
+	tomcat의 시작은 filter이고 spring의 시작은 interceptor
+	filter는 서블릿을 사용할 수는 있어도 빈은 사용할 수 없음
+몰 해서 개선되었다(최적화)는걸 보여주는게 중요하다
+prehandle과 posthandle
+html에서 사용하는 태그들은 트리구조로 위에가 실행이 안되면 밑에도 실행이 안되는식
+
+확인사항
+09:11 error/NullPointerException
+09:16 RuntimeException이 아닌 Exception을 상속 받아서 사용하는 이유
+	컴파일 에러를 잡질 못함...
+09:38 디폴트 페이지로 이동하는 확인작업
+11:22 인증, 인가에 대한 클래스간 빈 전달에 대한 설명
+11:34 <link rel="stylesheet" href="http://localhost:8080/css/test.css">
+11:45 프론트 서버 db 
+12:13 multipart/form-data, MIME
+15:20 예외처리에 대한 전역설정과 지역설정
+15:25 인터셉터 빈설정 후 configuration사용방법
