@@ -21,6 +21,9 @@ L4/L7
 
 마이바티스 프로젝트에 build - libs 경로 이동하고 -> java -jar eurekaserver-0.0.1-SNAPSHOT.jar
 
+종속 추가에 Gateway가 아닌 reactivegateway
+	webflux 기술적용되어서 비동기 처리를 지원해준다
+
 확인사항
 1교시 수업 다시듣기
 10:19 application.yml 소스트리에 추가해야 될 부분 체크 ***
@@ -32,3 +35,7 @@ L4/L7
 	터미널에서 빌드하는 다른 방법
 	테스트코드도 성공해야 build된다
 	그리고 이걸 터미널에서 실행하는 방법 체크
+12:26 로드밸런스에 대한 개념
+	uri: lb:// 1ST-SERVICE
+12:34 빌트인필터와 커스텀필터 활용 예정
+	커스텀필터 활용 예정 -> Security할 떄 사용

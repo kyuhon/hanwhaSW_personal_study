@@ -1,0 +1,37 @@
+    server:
+      port: 8080
+
+    eureka:
+      client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+          defaultZone: http://localhost/8761/eureka
+    spring:
+      application:
+        name: gateway-server
+      cloud:
+        gateway:
+          routes:
+           - id: 1st-service-get
+#            uri: http://localhost:12345/
+
+             # ??? ? ???? ???(?, application none? ??(??? ??? ????? ?? ?? ??? ??))
+             uri: lb://1ST-SERVICE
+
+             # ????? ??? ??? ?? ???? ???(??? ???)
+             predicates:
+               - Path=/first-service/**
+
+             # ?? ??? ? ???? ???? //first-service?? ???? ???? ?? ????? ???? ? + ?? ??
+             # ???? built in ?? + custom ??(feat.spring security) ?? ??
+             filters:
+               - RewritePath=/first-service/(?<segment>.*), /$\{segment}
+
+           - id: 2st-service-get
+#            uri: http://localhost:12345/
+             uri: lb://2st-SERVICE
+             predicates:
+               - Path=/second-service/**
+             filters:
+               - RewritePath=/first-service/?<segment>.*, /$\{segment}
