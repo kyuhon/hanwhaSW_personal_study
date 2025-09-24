@@ -19,3 +19,8 @@ spring:
 
 hello:
   message: Welcome to 19th SW-Camp
+
+# ??. 12??? ?? ?? + HMackSha 512 ???
+token:
+  expiration_time: 43200000
+  secret: 76I7DPQbwDax7GSljScAjt4kYg9V/BR5Getv8yvsUh9NoNnR4p+BE+0crGyk19//edd/ryYmNyAyuH+pn6xxnA==
