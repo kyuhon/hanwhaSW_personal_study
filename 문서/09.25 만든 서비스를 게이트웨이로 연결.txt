@@ -17,3 +17,149 @@ msa-chap04-02를 게이트웨이로 연결하는 방법
 	java webflux기술을 사용해서 게이트웨이가 만들어짐
 12:20 마이크로서비스로 변경한 이유
 12:22 Mono
+14:22 Annonymous class 방식
+
+
+하브루타
+
+Spring Cloud Gateway
+
+org.springframework.cloud.gateway.filter.GatewayFilter
+org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory
+→ Gateway에서 커스텀 필터를 만들 때 확장해야 하는 기본 클래스
+
+
+Spring WebFlux (Reactive)
+
+org.springframework.http.HttpHeaders
+org.springframework.http.HttpStatus
+org.springframework.http.server.reactive.ServerHttpRequest
+org.springframework.http.server.reactive.ServerHttpResponse
+org.springframework.web.server.ServerWebExchange
+reactor.core.publisher.Mono
+→ 게이트웨이는 비동기 논블로킹(Reactor 기반) 으로 동작하기 때문에 WebFlux 관련 라이브러리 사용
+
+
+Spring Core
+
+org.springframework.core.env.Environment
+→ application.yml 같은 환경설정 파일에서 값(token.secret 등)을 가져올 때 사용
+
+package com.ohgiraffers.springcloudgateway.filter;
+
+import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+
+import java.util.Set;
+
+/* 설명. 게이트웨이에서 토큰 유형성 검사를 위한 필터 */
+@Component	1. 빈 생성
+@Slf4j	2. 로그 사용을 위함
+public class AuthorizationHeaderFilter
+    extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
+
+	3. 제네릭 설정 이유 필터가 어떤 설정 값을 사용할지를 명확하게 하기 위해서
+
+    /* 설명. Application.yml에서부터 토큰관련 설정값을 불러오기 위해서 */
+    Environment env;
+
+    @Autowired
+    public AuthorizationHeaderFilter(Environment env) {
+        super(Config.class);
+        this.env = env;
+    }
+
+    public static class Config {
+
+    }
+
+	3-1. Gateway의 확장 패턴을 따르기 위해 형식적으로 남긴것
+
+    @Override
+    public GatewayFilter apply(Config config) {
+        return (exchange, chain) -> {
+            ServerHttpRequest request = exchange.getRequest();
+
+            if(!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)){
+                return onError(exchange, "No authorization header" , HttpStatus.UNAUTHORIZED);
+            }
+
+            /* 설명. 토큰을 들고 왔다면 추가 검증 */
+            HttpHeaders headers = request.getHeaders(); // 스프링프래임워크 패키지로 임포트
+
+            /* 설명. request header에 담긴 값들을 로그로 확인 */
+            Set<String> keys = headers.keySet();
+            log.info(">>>");
+            keys.stream().forEach(v -> {
+                log.info(v + "=" + request.getHeaders().get(v));
+            });
+            log.info("<<<");
+
+			4. headers.keySet()
+			내부적으로 Map<String, List<String>> 구조
+			key = HTTP 헤더 이름
+			value = 해당 헤더 값들의 리스트
+			Map의 key 집합을 반환하는 메소드
+
+
+            /* 설명. "Authorization"이라는 키 값으로 넘어온 request header에 담긴 토큰 추출
+            *   (JWT Token) */
+            String bearerToken = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
+            String jwt = bearerToken.substring(7);
+
+            if(!isJwtValid(jwt)) {
+                return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
+            }
+
+            return chain.filter(exchange);
+        };
+    }
+
+    /* 설명. 토큰 유효성 검사용 메서드 */
+    private boolean isJwtValid(String jwt) {
+        boolean returnValue = true;
+
+        String subject = null;
+
+        /* 설명. 기본적으로 우리 서버에서 만들었고, 만료기간이 지나지 않았으며, 토큰 안에 'sub'라는 등록된
+        *        클레임이 있는지 확인
+        * */
+        try {
+            subject = Jwts.parser()
+                    .setSigningKey(env.getProperty("token.secret"))
+                    .parseClaimsJws(jwt).getBody().getSubject();
+        } catch (Exception e) {
+            returnValue = false;
+        }
+
+        /* 설명. 토큰의 payload에 subject 클레임 자체가 없거나 내용물이 없거나 */
+        if(subject == null || subject.isEmpty()) {
+            returnValue = false;
+        }
+
+        return returnValue;
+    }
+
+    /* 설명. Mono는 아무 데이터도 반환하지 않고, 비동기적으로 완료됨을 나타내는 반환타입 */
+    private Mono<Void> onError(ServerWebExchange exchange, String errorMessage, HttpStatus httpStatus) {
+        ServerHttpResponse response = exchange.getResponse();
+        response.setStatusCode(httpStatus);
+        log.info("에러 메시지: {}", errorMessage);
+
+        return response.setComplete();
+    }
+
+}
+

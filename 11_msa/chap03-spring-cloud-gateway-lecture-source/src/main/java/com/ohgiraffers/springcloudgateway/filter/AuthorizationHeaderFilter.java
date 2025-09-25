@@ -27,8 +27,8 @@ public class AuthorizationHeaderFilter
     Environment env;
 
     @Autowired
-    public AuthorizationHeaderFilter(Class<Config> configClass, Environment env) {
-        super(configClass);
+    public AuthorizationHeaderFilter(Environment env) {
+        super(Config.class);
         this.env = env;
     }
 
