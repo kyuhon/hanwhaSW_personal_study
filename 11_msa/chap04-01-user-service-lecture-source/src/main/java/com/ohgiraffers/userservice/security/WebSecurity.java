@@ -23,7 +23,9 @@ public class WebSecurity {
     private JwtUtil jwtUtil;
 
     @Autowired
-    public WebSecurity(JwtAuthenticationProvider jwtAuthenticationProvider,  Environment env, JwtUtil jwtUtil) {
+    public WebSecurity(JwtAuthenticationProvider jwtAuthenticationProvider,
+                       Environment env,
+                       JwtUtil jwtUtil) {
         this.jwtAuthenticationProvider = jwtAuthenticationProvider;
         this.env = env;
         this.jwtUtil = jwtUtil;

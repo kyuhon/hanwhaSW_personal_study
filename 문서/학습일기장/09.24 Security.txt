@@ -37,4 +37,8 @@ csrfToken에 jwtToken을 같이 들고 다니는 부분은 게이트웨이에서
 11:45 security를 적용하기 위한 코드흐름 설명 **************
 12:13 jwtToken 사이트 **********
 15:18 userDetails.getAuthorites 두개가 같은부분
-	
+
+
+
+
+

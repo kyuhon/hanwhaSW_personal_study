@@ -102,15 +102,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         log.info("List<String> 형태로 뽑아낸 로그인 한 회원의 권한들: {}", roles);
-        log.info("만료 시간: {}", env.getProperty("token,expiration_time"));
+        log.info("만료 시간: {}", env.getProperty("token.expiration_time"));
 
         /* 설명. 2. 재료를 활용한 JWT 토큰 제작(feat. build.gradle에 라이브러리 추가) */
         Claims claims = Jwts.claims().setSubject(id);
         claims.put("auto", roles);
 
         String token = Jwts.builder()
-                .setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(env.getProperty("token.expiration_time"))))
+                .setClaims(claims)  // 등록된 클레임 + 비공개 클레임
+                .setExpiration(new Date(System.currentTimeMillis()
+                        + Long.parseLong(env.getProperty("token.expiration_time"))))
                 .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret"))
                 .compact();
 

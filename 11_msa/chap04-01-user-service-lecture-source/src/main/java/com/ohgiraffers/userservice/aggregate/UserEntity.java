@@ -25,5 +25,5 @@ public class UserEntity {
     private String name;
 
     @Column(name="userId", nullable = false, unique = true)
-    private String userId;         // 회원 가입 시 생성 될 고유 아이디(닉네임 개념)
+    private String userId;  // 회원 가입 시 생성 될 고유 아이디(닉네임 개념)       // 회원 가입 시 생성 될 고유 아이디(닉네임 개념)
 }

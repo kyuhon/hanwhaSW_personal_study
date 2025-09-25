@@ -54,6 +54,13 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
     }
 
+    @Override
+    public UserDTO getUserById(String memNo) {
+       UserEntity user = userRepository.findById(Long.parseLong(memNo)).get();
+       UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+       return userDTO;
+    }
+
     /* 설명. spring security 사용 시 프로바이더 활용 할 로그인용 메소드(UserDetails 타입을 반환하는 메소드) */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

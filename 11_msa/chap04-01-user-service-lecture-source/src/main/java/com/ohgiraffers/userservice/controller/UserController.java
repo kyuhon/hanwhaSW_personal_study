@@ -1,19 +1,13 @@
 package com.ohgiraffers.userservice.controller;
 
-import com.ohgiraffers.userservice.dto.HelloDTO;
-import com.ohgiraffers.userservice.dto.RequestRegistUserDTO;
-import com.ohgiraffers.userservice.dto.ResponseRegistUserDTO;
-import com.ohgiraffers.userservice.dto.UserDTO;
+import com.ohgiraffers.userservice.dto.*;
 import com.ohgiraffers.userservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -24,7 +18,10 @@ public class UserController {
     private UserService userService;
     private ModelMapper modelMapper;
 
-    public UserController(Environment env, UserService userService, ModelMapper modelMapper,  HelloDTO hello) {
+    public UserController(Environment env,
+                          UserService userService,
+                          ModelMapper modelMapper,
+                          HelloDTO hello) {
         this.env = env;
         this.userService = userService;
         this.modelMapper = modelMapper;
@@ -51,5 +48,15 @@ public class UserController {
 
         ResponseRegistUserDTO responseUser = modelMapper.map(userDTO, ResponseRegistUserDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
+    }
+
+    @GetMapping("/users/{memNo}")
+    public ResponseEntity<ResponseFindUserDTO> getUsers(@PathVariable String memNo) {
+        UserDTO userDTO = userService.getUserById(memNo);
+
+        ResponseFindUserDTO responseUser = modelMapper.map(userDTO, ResponseFindUserDTO.class);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(responseUser);
     }
 }
