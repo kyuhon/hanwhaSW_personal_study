@@ -1,0 +1,75 @@
+09.22 restAPI
+
+springdatajpa insert와 delete 학습(1시간)
+
+restAPI
+프론트 없는 서버
+ssr X, thymleaf X,  그리고??
+
+RESTful API
+
+이번 프로젝트는 mvp를 만드는걸 주로 두며
+restAPI 까지 만들고 프론트를 배우면서 restfulAPI를 신경쓰면서 만든다
+
+07_springboot	폴더로 넘어가기
+	chap08-rest-api-lecture-source
+
+JSON 문자열
+	JSON Object, JSON Array
+
+2차 프로젝트(백엔드)
+	1. MVP 프로젝트 (핵심가치(문제해결) 구현)
+		-> Quality 는 떨어져도 완성에 집중
+		    3차 프로젝트에 디테일을 살릴 수 있으니 계층과 기능에만 집중
+	2. 테스트코드(Service계층)(1명당 1~2개)
+		-> component가 빠지면 안된다
+	    + MSA
+		GW + eureka + config + microservice
+	    + postman/http file/swagger
+	3. github(PR/코드리뷰(LGTM X)/project/milestone)
+	종속성
+		web, devtools, lombok, mariadb, spring data jpa, mybatis
+		eureka, gateway, security
+		modelmapper	
+	CQRS
+		Command
+			JPA, 추가, 수정, 삭제
+		Query
+			조회
+	
+
+확인사항
+09:14 서비스 계층 짤막 설명
+09:22 @Transactional 
+	하나의 영속성 컨텍스트 -> 조회 갔다오면 따로 놀때가 있다??
+10:20 restfulAPI
+	HATEOAS(Hypermedia as the Engine of Application State)
+		프론트가 가야할 길을 서버가 정해준다..
+10:30 json 형태로 값을 주고받는 예시
+10:43 1. http파일 2.postman 3.swagger
+11:05 restAPI를 사용한 첫 클래스파일 작성설명
+11:09 응답데이터에 헤더에 상태값을 담는게 더 좋은 방식, 무엇보다??
+11:30 이미지 전달방법
+12:05 이미지 요청방식중에서
+		byte[] 방식 - 동적 -> 이미지 명칭이 변경되면 그에 맞는 이미지가 요청됨
+		Webconfig방식 - 정적 -> 서버를 켰을 때 이미지가 고정되서 중간에 이미지 명칭을 바꿔도 이전에 설정된 이미지가 출력됨
+12:20 Cache-Control: no-cache, must-revalidate, no-store
+	must-revalidate, no-store 는 금융권에서 사용
+12:29 ResponseEntity 가 setter없이 값을 넣는 메소드 체인 형태를 제공한다.
+14:15 빌더패턴
+	chap08 rest-api
+		ResponseEntityTestController
+			        return ResponseEntity.ok()
+              			  .headers(headers)
+              			  .body(new ResponseMessage(200,userNo + "번 회원 조회성공!",responseMap));
+14:25 제네릭에 ? 사용하는부분
+	Object와 같음
+	public ResponseEntity<?> registUser(){}
+15:07 메소드 removeUser 의 코드흐름
+15:13 @Builder
+		기본 클래스가 2번 들어가서 부하가 걸릴수있음
+		사용하면 매개변수가 길어져서 코드에 나쁜 냄새가 난다
+	학습정리 *************
+15:25 2차 프로젝트 *****************
+15:39 시험범위
+	자료구조나 알고리즘 - node, edge
