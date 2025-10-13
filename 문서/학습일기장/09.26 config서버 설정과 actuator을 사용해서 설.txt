@@ -1,0 +1,24 @@
+09.26 config서버 설정과 actuator을 사용해서 설정 확인방법
+
+깃허브에 private...
+
+private repo 에 설정파일 올린 부분
+	s3버킷
+	ec2 탈취까지 이어진다
+
+Access Token vs Refresh Token
+10분 ~ 1시간	하루 ~ 몇 주
+
+
+확인사항
+09:27 
+    // bootstrap.yml을 인지시키기 위한 dependency
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
+
+    // spring boot의 모니터링 시스템 또는 동적 설정 변경 등 부가적인 기능 제공
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+10:15 actuator 설정 작성 후 포스트맨으로 사용하는 방법
+10:45 memberDTO, userImpl 사용방법
+
+yml파일은 깃허브 x

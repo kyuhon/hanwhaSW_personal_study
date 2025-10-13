@@ -1,0 +1,26 @@
+09.19 Spring data jpa
+
+다음주 restAPI, msa, springSecurity
+
+데이터 소스설정
+
+location.href -> 무조건 get방식
+
+페이지네이션이란 여러개의 컨텐츠를 여러 페이지로 나누고 페이지 번호 버튼, 이전 버튼, 다음 버튼을 눌러서 페이지를 이동하는 기능
+
+확인사항
+09:00 이론데이터
+09:20 db연결정보
+09:35 pathvaluable, querystring
+10:17 extends JpaRepository
+10:28 orElseThrow, exceptionHandler가 발생했을 때 무엇을 찍고싶다.. 할 때 사용한다??
+10:40 AppConfig -> menuController -> menuservice ******************
+11:05 restAPI 짤막설명, public String menuList
+11:40 pageable 변수설정 
+12:00 페이지 처리에 대한 설명, 말하기 연습
+14:30 자바스크립트 태그를 객체로 담는방법 $
+	ASI
+14:37 @ResponseBody
+14:40 service가 2가지 도메인을 건들고 있다...
+15:06 springSecurity
+15:30 전체복습

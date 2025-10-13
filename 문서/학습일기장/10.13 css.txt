@@ -1,0 +1,18 @@
+10.13 css
+css에서 id와 class차이
+figma mcp
+레이아웃 스타일2 다시하기
+
+확인사항
+09:25 서버사이드 랜더링 블라블라..
+10:11 개발자모드 css확인
+14:10 Modal 창
+	/* visibility는 존재하지만 안보이게, display:none은 존재 자체가 x */
+        .vis-test2 {
+            background: yellow;
+            visibility: hidden;
+            visibility: visible;
+            /* 이 속성을 활용한 것으로는 대표적으로는 modal 창이 있다. */
+            display: none;  
+        }
+
