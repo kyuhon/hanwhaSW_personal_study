@@ -1,0 +1,41 @@
+10.15 js
+
+03_object-literal의 02_property이어서
+
+복습
+	undifined나 널을 사용해도 논리연산자가 사용된다
+
+var val = obj?.value;
+	? 코틀린에서 사용됐다??
+	obj가 객체가 대입되지 않은 상황에서도 에러가 발생하지 않게 사용됨 - ?
+
+var obj;
+경우 객체가 대입되지 않았기에 obj.value같이 객체가 대입된 상황을
+사용되면 에러 발생
+
+var obj = null;
+	객체를 대입할 예정을 표현
+
+자바스크립트에서는 자바처럼 매개변수라는 용어를 사용하지 않고
+인수나 인자라고 표현
+
+자바스크립트에도 Object라는게 있는데
+
+1. nodejs
+
+
+2. web browser
+window 전역객체
+
+기명함수와 익명함수
+
+확인사항
+09:13 property
+	자바와 비교하여 생성자가 필요없는 리터럴객체
+09:23 개발자 도구와 콘솔창의 차이
+	Object.getOwnPropertyDescriptors(str)
+09:34 Vue2 버전이 아닌 Vue3 버전을 사용함
+09:48 전역객체
+	globalThis
+10:15 var dog = {~~}
+	this의 호출
