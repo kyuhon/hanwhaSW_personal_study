@@ -5,9 +5,9 @@
 */
 
 var obj = null;
-obj = {
-    'value': 'abc'
-};
+// obj = {
+//     'value': 'abc'
+// };
 
 var val = obj?.value;   // NPE 방지 코드
 console.log(val);

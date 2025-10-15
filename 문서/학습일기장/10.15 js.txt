@@ -39,3 +39,14 @@ window 전역객체
 	globalThis
 10:15 var dog = {~~}
 	this의 호출
+12:18 자바의 comparator와 비교한 설명
+	sort
+12:23 synchronize(sync) - 동기
+	asynchronize(async) - 비동기
+	block
+	non-block	*************************************
+12:40 클로저 closer
+	(렉시컬 환경을 가지는 반환되는 함수)
+	function () {
+        console.log(`${count}번 반복 완료`);
+   	 }
