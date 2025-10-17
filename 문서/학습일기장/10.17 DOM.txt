@@ -11,6 +11,9 @@ attribute와 property
 2. 한줄 실행
 3. ->, => 생략 문법 활용
 
+props drilling
+	pinia, composable
+
 확인사항
 11:30 list => list.style.color = 'blue'
 	콜백함수
