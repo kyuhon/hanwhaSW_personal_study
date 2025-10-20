@@ -176,7 +176,9 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 
 	전체 코스 수
 	전체 코스에 대한 난이도별 코스 비율(쉬움, 보통, 어려움)
-
+	난이도별 평균 고도 상승량
+		SELECT frtrlDifficulty, AVG(frtrlHeightGain) FROM Frtrl GROUP BY frtrlDifficulty;
+	
 	전체 산도장 획득 수 - MountainStamp 테이블 인스턴스 개수
 	전체 코스도장 획득 수 - CourseStamp 테이블 인스턴스 개수
 	전체 산북마크 등록 개수
@@ -186,9 +188,28 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 	등산완료시간 - 오전 4시부터 오후 12시, 오후 12시부터 저녁 8시 기준에 따른 비율
 
 크루
+	크루
+		전체 크루 수
+			SELECT COUNT(*) FROM Crew WHERE crewIsDeleted = 'N';
+		이번 달 새로 생성된 크루 수
+			GROUP BY DATE_FORMAT(crewCreateDate, '%Y-%m')
+		모집 중인 크루 수
+			SELECT COUNT(*) FROM Crew WHERE crewIsRecruit = 'Y';
+		삭제된 크루 수
+			SELECT COUNT(*) FROM Crew WHERE crewIsDeleted='Y';
 
-	전체 크루 수
-	전체 크루구성원 수
+	크루 구성원
+		현재 활동 중인 크루 수
+			SELECT COUNT(*) FROM CrewMembeHistory WHERE crewMemberHistoryState = 3; -- 확인필요
+		크루 가입, 탈퇴, 강퇴 비율
+			CrewMemberHistory 상태 통계
+
+	등반 활동 통계
+		총 등반 게시글 수
+			SELECT COUNT(*) FROM CrewClimbBoard;
+		등반 성공률
+			COUNT(crewClimbHistoryIsSucceed='Y') / COUNT(*) * 100  -- CrewClimbRecord 기준
+
 	전체 크루가입신청 히스토리 수
 	전체 크루구성원 히스토리 수
 
