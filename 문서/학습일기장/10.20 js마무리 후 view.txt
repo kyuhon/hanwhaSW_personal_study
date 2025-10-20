@@ -1,0 +1,48 @@
+10.20 js마무리 후 view
+
+props
+lifecycle - 어떤 시점에 통신을 할건가 mount 기준
+router 
+
+백 구현이 미흡하면 json서버를 사용한다??
+
+
+
+확인사항
+9:10 Promise 객체에 대한 설명
+	고차함수 Promise객체를 만들어 콜백함수를 람다방식으로 Promise객체에 넘겨주고
+	에러가 발생하면 reject를 반환하고 성공하면 resolve를 반환한다
+	콜백지옥이 모지??
+		콜백 지옥은 JavaScript를 이용한 비동기 프로그래밍시 발생하는 문제로서, 함수의 매개 변수로 넘겨지는 콜백 함수가 		반복되어 코드의 들여쓰기 수준이 감당하기 힘들 정도로 깊어지는 현상을 말한다.
+
+       async function run() {
+               let result = await increase(0);
+		console.log(result);
+
+             return -1;
+        }
+
+         console.log(run());
+
+         run().then(result => console.log('async의 결과인 promise에 담긴 값:', result))
+
+	
+10:10 비동기 함수를 동기화
+		콜백지옥
+		then (catch, finally)
+		async func ( ~,~)
+
+10:30 XMLHttpRequest			****************** 프로젝트 시 상기하기
+	관리자모드에서 XHR칸을 보면서 백에서 효율적인 통신설계를 구상해야한다
+
+10:33 same origin policy (SOP)
+	Cross Origin Resource Sharing(CORS)
+		프론트는 프록시에 감싸서 사용하거나 백에서 ~~설정할 수 있다.
+
+10:44 js에서의 .text 와 .json
+		
+11:24 window 전역객체		*************************
+	DOM
+	BOM 을 쓰던지 모달창을 쓰던지??
+	view시작하기 전 마지막 정리
+
