@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <!--
+        ref(), reactive() 내부에는 프록시 객체로 저장된다 
+        반응성 변수: vue.js에서 ref()나 reactive()와 같은 함수를 사용하여 관리 될 데이터와 반응성
+                    변수를 생성할 수 있다. 이러한 반응성 변수는 vue와 반응성 시스템에 의해 관리되며,
+                    변수 값이 변경될 때마다 html요소(template 영역)에 자동으로 반영된다.
+        반응성(Reactivity): vue에서 데이터를 DOM에 바인딩하면 데이터 값이 변경될 때마다 해당 데이터를
+                            활용하는 DOM이 자동으로 업데이트 되는 것을 말한다.
+        데이터 바인딩(Data Binding): vue에서 데이터와 DOM을 연결해서 html 템플릿에 동적으로 랜더링 할 수
+                                    있도록 엮여 있다는 개념
+    -->
+    <div id="app">
+        <!-- 머스태치 문법 : 수염같다
+             보간법(interpolation) : 두 개의 점이 주어졌을 때 그 사이값을 예측 
+        -->
+        <h5>{{ message }}</h5>
+        <hr>
+        <h5>Raw Html</h5>
+        <!--                               v-xxxx => vue directive -->
+        <p>v-html directive: <span v-html="rawHtml"></span></p>
+        <p>text interpolation: {{ rawHtml }}</p>
+        <p>v-html directive: <span v-html="rawHtml"></span></p>
+    </div>
+    <script>
+        const { createApp, ref } = Vue;
+        createApp({
+            // option()으로 사용하면 vue 2버전
+            setup() {
+                // 'hello vue!' 원시 값은 주소를 가지지 않지만 ref를 사용해서 wrapping을 해야
+                // 감시자가 관리해서 프론트에 실시간 반영되게 한다 
+
+                // ref로 감싸여진 데이터를 담은 변수 - 반응형(성) 변수(reactive variable) 
+                const message = ref('hello vue!');
+                const rawHtml = ref('<span style="color:red">hello world</span>');
+                return {
+                    message,
+                    rawHtml
+                }
+            }
+        }).mount('#app');
+
+        /* vue 3 이전에 활용했던 방식인 options api 방식 활용(엣날 방식이므로 지양하자.(안되는 경우도 있음) */
+        createApp({
+            data() {
+                const message = "Hello Vue!";
+                return {
+                    message
+                }
+            },
+            method: {
+                test() {
+
+                }
+            }
+        }).mount('#app');
+
+        /*
+            composition API와 options API 차이
+            - composition API는 데이터를 관리하는 방식이 데이터를 사용하는 방식과 비슷해서 직관적이다.
+                즉, 데이터를 정의하고 사용하는 코드가 같은 함수 내에 있어 이해하기 쉽다.
+            - options API는 데이터를 관리하는 방식이 데이터를 사용하는 방식과 구분된다.
+                즉, 데이터를 정의하는 코드와 사용하는 코드를 따로 작성해야 해서 가독성이 되려 떨어지는 측면이 있다.    
+        */
+    </script>
+
+
+</body>
+
+</html>
