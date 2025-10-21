@@ -1,0 +1,45 @@
+10.21 view 이어서
+
+aws마비로 피그마 보류
+
+파이널 사례
+chatgpt 가 멈춰서 -> claude로 교체
+어댑터 패턴
+
+@click에서 @는 v-on생략
+
+div태그와 template태그는 무슨 차이지?
+
+객체는 reactive로 배열처리하는게 빠르다..
+
+v-for 과 v-if는 한줄로 사용하지 못하게 만듬
+
+v-bind:id => :id
+v-on:click => @click
+v-bind => 멀티 속성(객체)
+v-html
+v-text == {{ }}
+
+
+확인사례
+09:16
+<div v-bind="multiAttr">{{ multiAttr }}</div>
+v-bind는 v:id, v:class와 다르게 객체 자체에 속성이 존재함
+
+09:25
+const multiAttr = ref({
+                    id: "multiId",
+                    class: "multiClass",
+                    value: "multiValue"
+                });
+값이 변해도 포장지는 그대로이기 때문에 const를 사용해도 된다
+
+09:46
+모듈러스 연산자??
+
+10:06 div태그를 2개 이어서 썼을 때 리소스를 많이 먹는다..
+
+11:10 Lifecycle hook
+
+12:16 capturing, rasing, bubling
+	상위에서 click 시 target에서 rasing되면서 상위들도 동작시키는걸 bubling
