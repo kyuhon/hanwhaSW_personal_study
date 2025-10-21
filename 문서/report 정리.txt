@@ -100,17 +100,58 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 	막대그래프, 도넛차트, 라인차트, 히스토그램
 
 
-회원조회
+
+회원조회(DB I/O 효율을 위해서 테이블의 컬럼을 3등분해서 가져옴)
 
 	역할별 회원 조회
-		회원 기본정보 - 아이디, 이메일, 이름, 닉네임, 생일, 성별, 회원가입일
+
+		회원 기본정보 - 기본키, 아이디, 이메일, 이름, 닉네임, 생일, 성별, 회원가입일
+SELECT Id, memId,  email, memName, nickname, birth, gender, signInDate FROM Member;
 
 			전체 회원 수 - 현재 가입된 총 회원 수 - 숫자 카운트(실시간 반영)
+SELECT COUNT(*) AS total_members FROM Member;
+
 			성별 비율 - 현재 가입된 성별에 대한 비율 - 도넛 차트
-			연령별 회원 분포 - 20대 이하, 30대 ~ 50대, 60이상 - 막대그래프
+SELECT
+    gender,
+    COUNT(*) AS count,
+    ROUND(COUNT(*) * 100 / (SELECT COUNT(*) FROM Member), 2) AS ratio
+FROM Member
+GROUP BY gender;
+
+			연령별 회원 분포 - 10대 이하, 20대, 30대, 40대, 50대, 60대 이상 - 막대그래프
+SELECT
+    CASE
+        WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) <= 10 THEN '10대 이하'
+        WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 11 AND 19 THEN '10대'
+        WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 20 AND 29 THEN '20대'
+        WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 30 AND 39 THEN '30대'
+        WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 40 AND 49 THEN '40대'
+        WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 50 AND 59 THEN '50대'
+		  ELSE '60대 이상'
+    END AS age_group,
+    COUNT(*) AS count
+FROM Member
+GROUP BY age_group
+ORDER BY age_group;
+
 			신규 가입 추이 - 최근 1년간 월별 신규 가입자 수 - 라인차트
+SELECT
+    YEAR(signInDate) AS year,
+    MONTH(signInDate) AS month,
+    COUNT(*) AS new_members
+FROM
+    Member
+GROUP BY
+    YEAR(signInDate),
+    MONTH(signInDate)
+ORDER BY
+    YEAR(signInDate),
+    MONTH(signInDate);
+
+
 			
-		회원 로그인정보 - 아이디, 마지막 로그인, 계정 탈퇴일시, 
+		회원 로그인정보 - 기본키, 마지막 로그인, 계정 탈퇴일시, 
 				로그인 제한 시간 , 연속 로그인 실패횟수 , 회원 상태(MemberStatus 테이블 조인)
 
 			로그인한 회원 수 지표 - 막대차트
@@ -129,7 +170,7 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 
 			정상, 휴면, 탈퇴 비율 - 도넛차트
 
-		회원 등급 및 상태 - 아이디, 등산횟수, 점수(등급 산정 기준), 회원등급 ID, 크루번호
+		회원 등급 및 상태 - 기본키, 등산횟수, 점수(등급 산정 기준), 회원등급 ID, 크루번호
 
 			전체 회원 중 등급별 회원수 
 				(15이하, 16이상 49이하, 50이상 99이하, 100이상 179이하, 180이상 399이하, 400이상)
@@ -143,6 +184,9 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 
 
 	신고
+	신고테이블 조회는 하나의 겟방식으로만 가져오고 각 게시판에 맞는 컬럼을 부여한다
+	클릭시 해당 인스턴스에 맞는 신고사유와 조인된 게시판테이블의 제목과 내용을 가져온다
+	
 		자유게시판
 			페이지네이션이 처리되어서 10개씩 인스턴스 불러오도록 로직처리
 			해당 인스턴스 클릭 시 
@@ -157,10 +201,23 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 		회원
 
 	이의신청
+	이의신청 테이블 전체 조회
+	클릭 시 해당 인스턴스에 맞는 이의신청 사유와 해당 신고ID에 신고테이블과 그에 맞는 게시판테이블에서 게시글 제목과
+	게시글 내용을 가져온다
+
+	이의신청 수락이나 거절 시 상태변경
+
 
 	회원정지
+	회원정지 테이블 전체 조회
+	클릭 시 해당 인스턴스에 맞는 회원ID의 회원 테이블에서 이름, 크루ID, 등산횟수, 점수를 가져온다
+		해당 인스턴스에 맞는 회원ID의 회원테이블에서 신고를 받은 숫자를 카운트한다
+
 
 	블랙리스트
+	블랙리스트 테이블 전체 조회
+	클릭 시 해당 인스턴스에 맞는 회원ID의 회원 테이블에서 이름, 크루ID, 등산횟수, 점수를 가져온다
+		해당 인스턴스에 맞는 회원ID의 회원테이블에서 신고를 받은 숫자를 카운트한다
 
 
 
@@ -171,13 +228,16 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 		서울특별시, 경기도, 강원특별자치도, 전북특별자치도, 인천광역시
 		충청북도, 충청남도, 경상북도, 경상남도, 전라북도, 전라남도, 부산광역시, 울산광역시
 	등반횟수가 많은 산 top5 - climbRecord에서 공통된 산 식별자가 많은 순위
-	해발고도 개수 (500미만, 500~1000, 1000이상) - 막대그래프
+	해발고도 개수 (500미만, 500~1000, 1000이상) - 도넛차트
 
-	전체 코스 수
+
+	전체 코스 개수
 	전체 코스에 대한 난이도별 코스 비율(쉬움, 보통, 어려움)
 	난이도별 평균 고도 상승량
 		SELECT frtrlDifficulty, AVG(frtrlHeightGain) FROM Frtrl GROUP BY frtrlDifficulty;
-	
+	월별 신규 코스 등록 수	
+
+
 	전체 산도장 획득 수 - MountainStamp 테이블 인스턴스 개수
 	전체 코스도장 획득 수 - CourseStamp 테이블 인스턴스 개수
 	전체 산북마크 등록 개수
@@ -185,6 +245,10 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 
 	등산시작시간 - 오전 4시부터 오후 12시, 오후 12시부터 저녁 8시 기준에 따른 비율
 	등산완료시간 - 오전 4시부터 오후 12시, 오후 12시부터 저녁 8시 기준에 따른 비율
+
+
+
+
 
 크루
 	크루
@@ -200,33 +264,37 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 		삭제된 크루 수
 			SELECT COUNT(*) FROM Crew WHERE crewIsDeleted='Y';
 		등산을 많이한 크루 순위 top5
+			크루, 크루 등산 모집 게시판, 크루 등산 기록 3중 조인을 해서 크루 등산 기록 완료 여부 확인
+			의 개수를 계산
 			
 			
 
 	크루 디테일
 		전체 크루구성원 수
 
+		현재 활동 중인 크루구성원 수
+			SELECT COUNT(*) FROM CrewMembeHistory WHERE crewMemberHistoryState = 3; -- 확인필요
 		전체 회원 중 크루 소속 수
 
 		전체 회원 중 크루 미소속 수
 
 		전체 등반 게시글 수
-
+			SELECT COUNT(*) FROM CrewClimbBoard;
 		전체 크루가입신청 히스토리 수
 
 		전체 크루구성원 히스토리 수
+
 
 
 		크루 가입, 탈퇴, 강퇴 비율
 			CrewMemberHistory 상태 통계
 
 		크루 등반 성공률
+			COUNT(crewClimbHistoryIsSucceed='Y') / COUNT(*) * 100  -- CrewClimbRecord 기준
 
 
 
-
-		현재 활동 중인 크루 수
-			SELECT COUNT(*) FROM CrewMembeHistory WHERE crewMemberHistoryState = 3; -- 확인필요
+		
 		
 
 	등반 활동 통계
@@ -301,3 +369,11 @@ create, update, delete
 		
 	이의신청 상태변경
 		이의신청 Y로 상태변경시 해당 신고 테이블 이의신청 N으로 상태변경
+
+
+
+10월 22일 용어에 대한 고민
+	회원 테이블에 있는 컬럼이 많아서 컬럼을 3등분해서 따로가져올까 하는데 전체를 가져오고 뿌리는게 좋을까 
+	3등분하는게 좋을까?
+		“DB I/O 효율 vs 개발 복잡도” 사이의 트레이드오프 문제
+
