@@ -20,6 +20,10 @@ v-bind => 멀티 속성(객체)
 v-html
 v-text == {{ }}
 
+LifeCycle
+props
+
+
 
 확인사례
 09:16
@@ -43,3 +47,6 @@ const multiAttr = ref({
 
 12:16 capturing, rasing, bubling
 	상위에서 click 시 target에서 rasing되면서 상위들도 동작시키는걸 bubling
+
+14:30 <select v-model="selectedFruit">
+	양방향 바인딩
