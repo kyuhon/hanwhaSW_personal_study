@@ -104,12 +104,28 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 회원조회(DB I/O 효율을 위해서 테이블의 컬럼을 3등분해서 가져옴)
 
 	역할별 회원 조회
-
+		localhost:8000/main-client/admin/memberinfo(get방식)
 		회원 기본정보 - 기본키, 아이디, 이메일, 이름, 닉네임, 생일, 성별, 회원가입일
-SELECT Id, memId,  email, memName, nickname, birth, gender, signInDate FROM Member;
 
+SELECT
+        id,
+        memId,
+        email,
+        memName,
+        nickname,
+        birth,
+        gender,
+        signInDate
+        FROM Member
+        ORDER BY id DESC
+        <if test="limit != null and offset != null">
+            LIMIT #{limit} OFFSET #{offset}
+        </if>
+
+
+		localhost:8000/main-client/admin/memberinfostats(get방식)
 			전체 회원 수 - 현재 가입된 총 회원 수 - 숫자 카운트(실시간 반영)
-SELECT COUNT(*) AS total_members FROM Member;
+
 
 			성별 비율 - 현재 가입된 성별에 대한 비율 - 도넛 차트
 SELECT
@@ -153,6 +169,7 @@ ORDER BY
 			
 		회원 로그인정보 - 기본키, 마지막 로그인, 계정 탈퇴일시, 
 				로그인 제한 시간 , 연속 로그인 실패횟수 , 회원 상태(MemberStatus 테이블 조인)
+
 
 			로그인한 회원 수 지표 - 막대차트
 				최근 7일간 로그인한 회원 수
@@ -201,34 +218,51 @@ ORDER BY
 		회원
 
 	이의신청
-	이의신청 테이블 전체 조회
-	클릭 시 해당 인스턴스에 맞는 이의신청 사유와 해당 신고ID에 신고테이블과 그에 맞는 게시판테이블에서 게시글 제목과
-	게시글 내용을 가져온다
 
-	이의신청 수락이나 거절 시 상태변경
+		이의신청 테이블 전체 조회(get방식 - )
+			
+		해당 이의신청 조회
+			클릭 시 해당 인스턴스에 맞는 이의신청 사유와 해당 신고ID에 신고테이블과 그에 맞는 게시판테이블에서 게시
+			글 제목과 게시글 내용을 가져온다(3중 조인)
+
+		이의신청 수락이나 거절 시 상태변경(patch방식 - localhost:8000/main-client/protest/{id})
+			수락 시 관리자 id가 등록되고 이의신청 테이블의 상태가 Y로 변경되고 해당 신고테이블이 상태가 N으로 변경
+
 
 
 	회원정지
-	회원정지 테이블 전체 조회
-	클릭 시 해당 인스턴스에 맞는 회원ID의 회원 테이블에서 이름, 크루ID, 등산횟수, 점수를 가져온다
-		해당 인스턴스에 맞는 회원ID의 회원테이블에서 신고를 받은 숫자를 카운트한다
+
+		회원정지 테이블 전체 조회(get방식)
+
+		해당 회원정지 인스턴스의 회원 조회(get방식) ***** 블랙리스트쪽 조회와 동일
+			클릭 시 해당 인스턴스에 맞는 회원ID의 회원 테이블에서 이름, 크루ID, 등산횟수, 점수를 가져온다
+			해당 인스턴스에 맞는 회원ID의 회원테이블에서 신고를 받은 숫자를 카운트한다
+
+		해당 회원정지 확인 
+			해당 인스턴스의 회원정지 테이블에 주석과 관리자 ID insert
 
 
 	블랙리스트
-	블랙리스트 테이블 전체 조회
-	클릭 시 해당 인스턴스에 맞는 회원ID의 회원 테이블에서 이름, 크루ID, 등산횟수, 점수를 가져온다
-		해당 인스턴스에 맞는 회원ID의 회원테이블에서 신고를 받은 숫자를 카운트한다
+
+		블랙리스트 테이블 전체 조회
+
+		해당 블랙리스트 인스턴스의 회원 조회(get방식) ***** 회원정지쪽 조회와 동일
+			클릭 시 해당 인스턴스에 맞는 회원ID의 회원 테이블에서 이름, 크루ID, 등산횟수, 점수를 가져온다
+			해당 인스턴스에 맞는 회원ID의 회원테이블에서 신고를 받은 숫자를 카운트한다
+
+		해당 블랙리스트 확인
+			해당 인스턴스의 블랙리스트 테이블에 주석과 관리자 ID insert
 
 
 
-산 및 코스(통계 자료 7~9)
+산 및 코스(통계 자료 7~9)(get방식)
 
 	전체 산 개수
 	산 테이블에 등록된 지역별 산 개수(13개)
 		서울특별시, 경기도, 강원특별자치도, 전북특별자치도, 인천광역시
 		충청북도, 충청남도, 경상북도, 경상남도, 전라북도, 전라남도, 부산광역시, 울산광역시
 	등반횟수가 많은 산 top5 - climbRecord에서 공통된 산 식별자가 많은 순위
-	해발고도 개수 (500미만, 500~1000, 1000이상) - 도넛차트
+	해발고도에 따른 등반횟수 비율 (500미만, 500~1000, 1000이상) - 도넛차트
 
 
 	전체 코스 개수
@@ -254,26 +288,28 @@ ORDER BY
 	크루
 
 		전체 크루 수
+
+		이번 달 새로 생성된 크루 수
+			GROUP BY DATE_FORMAT(crewCreateDate, '%Y-%m')
 			
 		활동 중인 크루 수
 			SELECT COUNT(*) FROM Crew WHERE crewIsDeleted = 'N';
-		이번 달 새로 생성된 크루 수
-			GROUP BY DATE_FORMAT(crewCreateDate, '%Y-%m')
+
 		모집 중인 크루 수
 			SELECT COUNT(*) FROM Crew WHERE crewIsRecruit = 'Y';
-		삭제된 크루 수
-			SELECT COUNT(*) FROM Crew WHERE crewIsDeleted='Y';
+
 		등산을 많이한 크루 순위 top5
 			크루, 크루 등산 모집 게시판, 크루 등산 기록 3중 조인을 해서 크루 등산 기록 완료 여부 확인
 			의 개수를 계산
 			
 			
 
-	크루 디테일
+	크루 디테일(get 방식)
+
 		전체 크루구성원 수
 
 		현재 활동 중인 크루구성원 수
-			SELECT COUNT(*) FROM CrewMembeHistory WHERE crewMemberHistoryState = 3; -- 확인필요
+			SELECT COUNT(*) FROM CrewMembeHistory WHERE crewMemberHistoryState = "JOINED";
 		전체 회원 중 크루 소속 수
 
 		전체 회원 중 크루 미소속 수

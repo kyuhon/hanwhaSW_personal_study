@@ -1,0 +1,29 @@
+body {
+    border: violet solid 3px;
+    width: 90%;
+    height: 80vh;
+    ;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.aside_a {
+    border: black solid 5px;
+    width: 30%;
+    height: 500px;
+    padding-right: 100px;
+}
+
+.aside_b {
+    width: 65%;
+}
+
+.b_a {
+    border: red solid 5px;
+}
+
+.b_b {
+    border: yellow solid 5px;
+}
