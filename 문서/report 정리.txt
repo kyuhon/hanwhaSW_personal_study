@@ -87,7 +87,7 @@ report 정리
 
 
 
-10.15 관리자 페이지 (v1.0.0 - 기본 틀만들고 추가하기)
+10.15 관리자 페이지 (v1.0.0 - 기본 틀만들고 추가하기) _____________________________________________________________________
 
 membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추가
 
@@ -107,7 +107,7 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 		localhost:8000/main-client/admin/memberinfo(get방식)
 		회원 기본정보 - 기본키, 아이디, 이메일, 이름, 닉네임, 생일, 성별, 회원가입일
 
-SELECT
+        SELECT
         id,
         memId,
         email,
@@ -125,74 +125,171 @@ SELECT
 
 		localhost:8000/main-client/admin/memberinfostats(get방식)
 			전체 회원 수 - 현재 가입된 총 회원 수 - 숫자 카운트(실시간 반영)
+        SELECT COUNT(*) AS total_members
+        FROM Member
 
 
+		
 			성별 비율 - 현재 가입된 성별에 대한 비율 - 도넛 차트
-SELECT
-    gender,
-    COUNT(*) AS count,
-    ROUND(COUNT(*) * 100 / (SELECT COUNT(*) FROM Member), 2) AS ratio
-FROM Member
-GROUP BY gender;
+        SELECT
+        gender,
+        COUNT(*) AS count,
+        ROUND(COUNT(*) * 100 / (SELECT COUNT(*) FROM Member), 2) AS ratio
+        FROM Member
+        GROUP BY gender
+
 
 			연령별 회원 분포 - 10대 이하, 20대, 30대, 40대, 50대, 60대 이상 - 막대그래프
-SELECT
-    CASE
-        WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) <= 10 THEN '10대 이하'
+        SELECT
+        CASE
+        WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 0 AND 10 THEN '10대 이하'
         WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 11 AND 19 THEN '10대'
         WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 20 AND 29 THEN '20대'
         WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 30 AND 39 THEN '30대'
         WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 40 AND 49 THEN '40대'
         WHEN FLOOR(TIMESTAMPDIFF(MONTH, birth, CURDATE()) / 12) BETWEEN 50 AND 59 THEN '50대'
-		  ELSE '60대 이상'
-    END AS age_group,
-    COUNT(*) AS count
-FROM Member
-GROUP BY age_group
-ORDER BY age_group;
+        ELSE '60대 이상'
+        END AS ageGroup,
+        COUNT(*) AS count
+        FROM Member
+        GROUP BY ageGroup
+        ORDER BY ageGroup
 
 			신규 가입 추이 - 최근 1년간 월별 신규 가입자 수 - 라인차트
-SELECT
-    YEAR(signInDate) AS year,
-    MONTH(signInDate) AS month,
-    COUNT(*) AS new_members
-FROM
-    Member
-GROUP BY
-    YEAR(signInDate),
-    MONTH(signInDate)
-ORDER BY
-    YEAR(signInDate),
-    MONTH(signInDate);
+        SELECT
+        YEAR(signInDate) AS year,
+        MONTH(signInDate) AS month,
+        COUNT(*) AS newMembers
+        FROM Member
+        WHERE signInDate >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+        GROUP BY YEAR(signInDate), MONTH(signInDate)
+        ORDER BY YEAR(signInDate), MONTH(signInDate)
 
 
-			
+			localhost:8000/main-client/admin/memberlogin(get방식)
 		회원 로그인정보 - 기본키, 마지막 로그인, 계정 탈퇴일시, 
 				로그인 제한 시간 , 연속 로그인 실패횟수 , 회원 상태(MemberStatus 테이블 조인)
+        SELECT
+        m.id,
+        m.lastLogin,
+        m.quitDate,
+        m.loginLockUntil,
+        m.loginFailCnt,
+        s.status
+        FROM Member m
+        LEFT JOIN MemberStatus s ON m.memStsId = s.id
+        ORDER BY m.id DESC
+        <if test="limit != null and offset != null">
+            LIMIT #{limit} OFFSET #{offset}
+        </if>
 
-
+			localhost:8000/main-client/admin/memberloginstats(get방식)
 			로그인한 회원 수 지표 - 막대차트
-				최근 7일간 로그인한 회원 수
+				최근 7일간 로그인한 회원 수와 전체 회원 중 비율
 					전체 회원 중 몇 %가 최근 7일 내에 로그인을 했는지
-				최근 30일간 로그인한 회원 수
+				최근 30일간 로그인한 회원 수와 전체 회원 중 비율
 					전체 회원 중 몇 %가 최근 30일 내에 로그인을 했는지
 				재방문율 / 충성도 지표
 					7일 로그인 회원 수 / 30일 로그인 회원 수 * 100
 					주간 활동성이 한 달 대비 얼마나 유지되는지
 
+        SELECT
+        COUNT(DISTINCT CASE WHEN m.lastLogin >= DATE_SUB(NOW(), INTERVAL 7 DAY) THEN m.id END) AS login7d,
+        COUNT(DISTINCT CASE WHEN m.lastLogin >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN m.id END) AS login30d,
+        ROUND(
+        COUNT(DISTINCT CASE WHEN m.lastLogin >= DATE_SUB(NOW(), INTERVAL 7 DAY) THEN m.id END)
+        / COUNT(*) * 100, 2
+        ) AS recent7Ratio,
+        ROUND(
+        COUNT(DISTINCT CASE WHEN m.lastLogin >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN m.id END)
+        / COUNT(*) * 100, 2
+        ) AS recent30Ratio,
+        ROUND(
+        (COUNT(DISTINCT CASE WHEN m.lastLogin >= DATE_SUB(NOW(), INTERVAL 7 DAY) THEN m.id END)
+        / COUNT(DISTINCT CASE WHEN m.lastLogin >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN m.id END)) * 100, 2
+        ) AS loyaltyRate
+        FROM Member m
+
 			시간대별 로그인 분포 - 라인차트
 				가로 - 해당 로그인 인스턴스 수
 				세로 - 오전 5시부터 오전 9시, 오후 9시부터 오후 12시
 					, 오후 12시부터 오후 4시, 오후 12시부터 오후 7시
+       SELECT
+        CASE
+        WHEN HOUR(lastLogin) BETWEEN 5 AND 8 THEN '오전 5시~9시'
+        WHEN HOUR(lastLogin) BETWEEN 9 AND 11 THEN '오전 9시~12시'
+        WHEN HOUR(lastLogin) BETWEEN 12 AND 15 THEN '오후 12시~4시'
+        WHEN HOUR(lastLogin) BETWEEN 16 AND 18 THEN '오후 4시~7시'
+        WHEN HOUR(lastLogin) BETWEEN 19 AND 23 THEN '오후 7시~12시'
+        ELSE '기타'
+        END AS loginTimeRange,
+        COUNT(*) AS loginCount
+        FROM Member
+        WHERE lastLogin IS NOT NULL
+        GROUP BY loginTimeRange
+        ORDER BY FIELD(loginTimeRange,
+        '오전 5시~9시',
+        '오전 9시~12시',
+        '오후 12시~4시',
+        '오후 4시~7시',
+        '오후 7시~12시',
+        '기타')
 
-			정상, 휴면, 탈퇴 비율 - 도넛차트
+			정상, 정지, 휴면상태, 탈퇴, 블랙리스트 수와 비율
+        SELECT
+        s.status,
+        COUNT(*) AS count,
+        ROUND(COUNT(*) / (SELECT COUNT(*) FROM Member) * 100, 2) AS ratio
+        FROM Member m
+        JOIN MemberStatus s ON m.memStsId = s.id
+        GROUP BY s.status
 
+
+
+			localhost:8000/main-client/admin/memberrank(get방식)
 		회원 등급 및 상태 - 기본키, 등산횟수, 점수(등급 산정 기준), 회원등급 ID, 크루번호
 
+       SELECT
+        m.id,
+        m.climbCnt,
+        m.score,
+        r.name AS rank,
+        m.crewId
+        FROM Member m
+        LEFT JOIN MemberRank r ON m.memRankId = r.id
+        ORDER BY m.id DESC
+        <if test="limit != null and offset != null">
+            LIMIT #{limit} OFFSET #{offset}
+        </if>
+
+			localhost:8000/main-client/admin/memberrankstats(get방식)
 			전체 회원 중 등급별 회원수 
 				(15이하, 16이상 49이하, 50이상 99이하, 100이상 179이하, 180이상 399이하, 400이상)
 			전체 회원 중 등급별 평균점수
 			전체 회원 중 등급별 평균등산횟수
+
+        SELECT
+        CASE
+        WHEN m.score BETWEEN 0 AND 15 THEN '씨앗'
+        WHEN m.score BETWEEN 16 AND 49 THEN '새싹이'
+        WHEN m.score BETWEEN 50 AND 99 THEN '나뭇잎'
+        WHEN m.score BETWEEN 100 AND 179 THEN '꽃잎'
+        WHEN m.score BETWEEN 180 AND 399 THEN '열매'
+        WHEN m.score >= 400 THEN '황금씨앗'
+        END AS levelRange,
+        COUNT(*) AS memberCount,
+        ROUND(AVG(m.score), 2) AS avgScore,
+        ROUND(AVG(m.climbCnt), 2) AS avgClimbCnt
+        FROM Member m
+        GROUP BY levelRange
+        ORDER BY
+        FIELD(levelRange,
+        '씨앗',
+        '새싹이',
+        '나뭇잎',
+        '꽃잎',
+        '열매',
+        '황금씨앗')
 			
 
 
@@ -202,8 +299,20 @@ ORDER BY
 
 	신고
 	신고테이블 조회는 하나의 겟방식으로만 가져오고 각 게시판에 맞는 컬럼을 부여한다
+	localhost:8000/main-client/reports/type/board?page=3&size=10
+	localhost:8000/main-client/reports/type/board/status/Y?page=3&size=10
+
 	클릭시 해당 인스턴스에 맞는 신고사유와 조인된 게시판테이블의 제목과 내용을 가져온다
+	localhost:8000/main-client/reports/39
+		자유게시판, 크루게시판 - 신고사유, 제목, 내용
+		댓글 - 신고사유, 내용
+		회원 - 신고사유
+
+	클릭시 신고내역의 상태가 변경된다
+	localhost:8000/main-client/report/63
+		********* 상태가 변경되면서 정책에 맞는 로직처리 **********	
 	
+
 		자유게시판
 			페이지네이션이 처리되어서 10개씩 인스턴스 불러오도록 로직처리
 			해당 인스턴스 클릭 시 
@@ -217,15 +326,23 @@ ORDER BY
 		댓글
 		회원
 
+
 	이의신청
 
-		이의신청 테이블 전체 조회(get방식 - )
-			
+		이의신청 테이블 전체 조회
+		localhost:8000/main-client/reportprotest
+	
 		해당 이의신청 조회
+		localhost:8000/main-client/reportprotest/2
 			클릭 시 해당 인스턴스에 맞는 이의신청 사유와 해당 신고ID에 신고테이블과 그에 맞는 게시판테이블에서 게시
 			글 제목과 게시글 내용을 가져온다(3중 조인)
 
-		이의신청 수락이나 거절 시 상태변경(patch방식 - localhost:8000/main-client/protest/{id})
+		이의신청 수락이나 거절 시 상태변경
+		patch방식 - localhost:8000/main-client/protest/{id}
+			{
+ 				 "status": "Y" ,
+ 				 "changeStatusReason": "이의신청 승낙합니다"
+			}
 			수락 시 관리자 id가 등록되고 이의신청 테이블의 상태가 Y로 변경되고 해당 신고테이블이 상태가 N으로 변경
 
 
@@ -332,13 +449,6 @@ ORDER BY
 
 		
 		
-
-	등반 활동 통계
-		총 등반 게시글 수
-			SELECT COUNT(*) FROM CrewClimbBoard;
-		등반 성공률
-			COUNT(crewClimbHistoryIsSucceed='Y') / COUNT(*) * 100  -- CrewClimbRecord 기준
-
 
 전체 구현 후에 일반 관리자 목록 추가예정
 정책 페이지 추가
