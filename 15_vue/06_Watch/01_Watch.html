@@ -45,6 +45,9 @@
             2. callback: 변경 감지 시 수행할 동작
             3. newVal: 현재 입력된 새로운 값
             4. oldVal: 입력 이전의 값
+
+            첫 번째 인수: 감시대상, 감시대상을 활용하는 콜백함수
+            두 번째 인수: 감시대상이 변하면 실행되는 콜백함수
         */
         createApp({
             setup() {
@@ -83,12 +86,20 @@
                 const z = ref(0);
                 const sum = ref(0);
 
-                watch(() => {
-                    console.log('실행되나');
-                    return x.value + y.value;
-                }, (result) => {
-                    sum.value = result;
-                });
+                // watch(() => {
+                //     console.log('실행되나');
+                //     return x.value + y.value;
+                // }, (result) => {
+                //     sum.value = result;
+                // });
+
+                // z, y, z 반응형 변수들 중에 어느 하나대로 변화가 생기면 콜백 함수 실행
+                watch([x, y, z], (newVal, oldVal) => {
+                    console.log('newVal:', newVal);
+                    console.log('oldVal:', oldVal);
+
+                    sum.value = x.value + y.value + z.value;
+                })
 
                 return {
                     x, y, z, sum

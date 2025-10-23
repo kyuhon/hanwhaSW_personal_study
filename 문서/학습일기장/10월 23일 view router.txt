@@ -1,0 +1,28 @@
+10월 23일 view router
+
+복습
+	watch 
+		인자가 2개 
+
+v-on: -> @
+v-bind -> :
+v-slot: -> #
+
+scss는 전문 프론트 과정이 아니기 때문에 제외
+
+확인사항
+09:26 
+		    immediate 옵션을 watch에 추가하면 두번째 인수로 던져진 콜백함수가 자동 실행된다.
+                    (내부적으로는 beforeCreate/created훅과 동등한 시점(composition api(Vue3버전) setup()시점))
+                    (컴포넌트가 화면에 마운트(부착)되기 이전에 해야할 일이 있으면 콜백에 작성할 수 있다.)
+                    (감시대상 변화시점 + setup시점)
+
+09:29 JPA, Mybatis ........ ****
+
+11:17 scoped
+
+12:27 npm install, node modules
+
+14:37 props drilling, pinia
+
+15:47 마무리 정리
