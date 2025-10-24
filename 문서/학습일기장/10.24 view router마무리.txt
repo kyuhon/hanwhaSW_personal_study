@@ -1,0 +1,41 @@
+10.24 view router마무리
+
+RouterRink 속성에서 replace는 전체 추가해줘야 이상해지지 않는다
+	replace - 히스토리를 쌓지 않게하는 기능(뒤로가기x)
+	
+useRout를 유즈루트로 발음하기도 한다
+
+nestedRouter
+	라우팅 안에 라우팅이 있는 구조
+
+children은 path 부분에 /를 작성하지 않는다
+
+Component(.vue) 분할 기준
+
+1. 재사용성
+2. 코드줄 수(200 ~ 300)
+3. 같은 상태, 기능 공유 단위
+4. 시각적 구분
+
+json서버 사용해보기
+	set-executionpolicy
+
+pinia
+
+
+확인사항
+09:22 url주소창 #, seo??
+09:48 첫번째 depth만 /를 작성한다??
+10:11 코드스플리팅 기술
+	 {
+                    path: 'home',
+                    // component: NestedHome
+                    component: () => import('@/views/02_nestedRouter/NestedHome.vue') <- 이렇게 작성하는것
+                },
+                {
+                    path: 'View',
+                    component: NestedView
+        
+11:05 cors ***************
+https://velog.io/@mrcocoball2/Spring-Cloud-Spring-Cloud-Gateway-CORS-%EA%B4%80%EB%A0%A8-%EC%84%A4%EC%A0%95
+
