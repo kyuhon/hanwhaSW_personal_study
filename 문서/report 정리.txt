@@ -210,6 +210,7 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
         ) AS loyaltyRate
         FROM Member m
 
+
 			시간대별 로그인 분포 - 라인차트
 				가로 - 해당 로그인 인스턴스 수
 				세로 - 오전 5시부터 오전 9시, 오후 9시부터 오후 12시
@@ -352,7 +353,7 @@ membersourcecode와 기본소스코드에 관리자 페이지용 패키지 추�
 		회원정지 테이블 전체 조회(get방식)
 		localhost:8000/main-client/bans
 		
-
+		localhost:8000/main-client/bans/2
 		해당 회원정지 인스턴스의 회원 조회(get방식) ***** 블랙리스트쪽 조회와 동일
 			클릭 시 해당 인스턴스에 맞는 회원ID의 회원 테이블에서 이름, 크루ID, 등산횟수, 점수를 가져온다
 			해당 인스턴스에 맞는 회원ID의 회원테이블에서 신고를 받은 숫자를 카운트한다
@@ -372,8 +373,11 @@ SELECT b.id AS banId,
 	GROUP BY b.id, b.userId, m.memName, m.crewId, m.climbCnt, m.score;
 
 
-
-		해당 회원정지 확인 (patch방식)
+		localhost:8000/main-client/ban/2
+		{
+  		  "annotation": "확인했습니다"
+		}
+		해당 회원정지 확인 (post방식)
 			해당 인스턴스의 회원정지 테이블에 주석과 관리자 ID insert
 
 
@@ -382,6 +386,7 @@ SELECT b.id AS banId,
 		블랙리스트 테이블 전체 조회
 		localhost:8000/main-client/blacklists
 
+		localhost:8000/main-client/blacklists/1
 		해당 블랙리스트 인스턴스의 회원 조회(get방식) ***** 회원정지쪽 조회와 동일
 			클릭 시 해당 인스턴스에 맞는 회원ID의 회원 테이블에서 이름, 크루ID, 등산횟수, 점수를 가져온다
 			해당 인스턴스에 맞는 회원ID의 회원테이블에서 신고를 받은 숫자를 카운트한다
@@ -400,6 +405,10 @@ SELECT b.id AS blacklistId,
 	WHERE b.id = 2
 	GROUP BY b.id, b.memberId, m.memName, m.crewId, m.climbCnt, m.score;
 
+		localhost:8000/main-client/blacklist/1
+		{
+  		  "annotation": "확인했습니다"
+		}
 		해당 블랙리스트 확인
 			해당 인스턴스의 블랙리스트 테이블에 주석과 관리자 ID insert
 
@@ -408,7 +417,7 @@ SELECT b.id AS blacklistId,
 산 및 코스(통계 자료 7~9)(get방식)
 
 	전체 산 개수
-SELECT COUNT(*) FROM Mountain;
+SELECT COUNT(*) AS totalMountain FROM Mountain;
 
 
 	산 테이블에 등록된 지역별 산 개수(13개)
@@ -481,10 +490,10 @@ SELECT COUNT(*) FROM Course;
 	전체 산북마크 등록 수
 	전체 코스북마크 등록 수
 SELECT
-    (SELECT COUNT(*) FROM MountainStamp) AS total_mountain_stamp_count,
-    (SELECT COUNT(*) FROM CourseStamp) AS total_course_stamp_count,
-    (SELECT COUNT(*) FROM MountainBookmark) AS total_mountain_bookmark_count,
-    (SELECT COUNT(*) FROM CourseBookmark) AS total_course_bookmark_count;
+        (SELECT COUNT(*) FROM MountainStamp) AS totalMountainStampCount,
+        (SELECT COUNT(*) FROM CourseStamp) AS totalCourseStampCount,
+        (SELECT COUNT(*) FROM MountainBookmark) AS totalMountainBookmarkCount,
+        (SELECT COUNT(*) FROM CourseBookmark) AS totalCourseBookmarkCount;
 
 	등산 시작시간 기준에 의한 등산시작시간 - 오전 4시부터 오후 12시, 오후 12시부터 저녁 8시 기준에 따른 비율
  SELECT
@@ -562,10 +571,28 @@ LIMIT 5;
 	크루 디테일(get 방식)
 
 		전체 크루구성원 수
-SELECT COUNT(*) FROM CrewMember;	
+		SELECT COUNT(*) FROM CrewMember;	
 
 		현재 활동 중인 크루구성원 수
-SELECT COUNT(*) FROM CrewMemberHistory WHERE crewMemberHistoryState = "JOINED";
+		SELECT COUNT(*) FROM CrewMemberHistory WHERE crewMemberHistoryState = "JOINED";
+
+		전체 등반 게시글 수
+		SELECT COUNT(*) FROM CrewClimbBoard;
+
+		전체 크루가입신청 히스토리 수
+		SELECT COUNT(*) FROM CrewApply;
+
+		전체 크루구성원 히스토리 수
+		SELECT COUNT(*) FROM CrewMemberHistory;
+
+        SELECT
+        (SELECT COUNT(*) FROM CrewMember) AS totalCrewMemberCount,
+        (SELECT COUNT(*) FROM CrewMemberHistory WHERE crewMemberHistoryState = 'JOINED') AS activeCrewMemberCount,
+        (SELECT COUNT(*) FROM CrewClimbBoard) AS totalCrewClimbBoardCount,
+        (SELECT COUNT(*) FROM CrewApply) AS totalCrewApplyCount,
+        (SELECT COUNT(*) FROM CrewMemberHistory) AS totalCrewMemberHistoryCount
+
+
 
 		전체 회원 중 크루 소속 수와 비율
 		전체 회원 중 크루 미소속 수와 비율
@@ -578,15 +605,6 @@ SELECT
 FROM Member;
 
 
-		전체 등반 게시글 수
-		SELECT COUNT(*) FROM CrewClimbBoard;
-
-		전체 크루가입신청 히스토리 수
-		SELECT COUNT(*) FROM CrewApply;
-
-		전체 크루구성원 히스토리 수
-		SELECT COUNT(*) FROM CrewMemberHistory;
-
 
 		크루 가입, 탈퇴, 강퇴 비율
 
@@ -597,6 +615,7 @@ SELECT
     COUNT(*) AS total_instances
 FROM CrewMemberHistory
 WHERE crewMemberHistoryState IN ('JOINED','QUITED','BANNED');
+
 
 
 		크루 등반 성공률
