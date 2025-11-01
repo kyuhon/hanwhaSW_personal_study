@@ -1,0 +1,43 @@
+10.30 마지막 프로젝트를 위한 시작
+
+파이썬 서버 - 백터db, 크롤링
+
+monolithic - msa와의 관계
+
+ContainerRuntime 
+	middleware라고도 한다
+	CNCF
+
+Docker Desktop
+
+
+
+확인사항
+09:28 DevOps
+	Development, QA, Operations
+		QA - 성능, 보안, 테스트 (테스트만하는 부서)
+09:44 병렬처리와 큐 사용에 대한 연관관계
+	ServiceMesh istio...
+	seriveProxy envoy...
+
+09:49 만든 서비스가 데이터양에 대해서 어느정도 부하를 처리할수있는지
+	Jmeter를 사용해서 로그를 수집하고 대쉬보드로 출력해서 정보를 읽고 판단
+	grafana logstash fluentd prometeus
+
+10:17 CloudNative의 역사
+		이걸 알아야 내가 왜 이렇게 설계했는지 설명할 수 있다..
+
+	baremetal
+	Type2 가상화..
+		운영체제가 올라간거같지만 올라가지 않은 것
+
+	Virtual Servers
+
+	Cloud - 데이터센터없이 리소스를 사용할 수있다...
+
+10:32 MicroServic에 많은 기능을 붙일 수 있는 용어들...
+
+10:34 CI/CD 
+	사일로화...
+
+11:17 도커에 대한 격리화 구조와 계층 구조..
