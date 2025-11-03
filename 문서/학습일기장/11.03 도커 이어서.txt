@@ -1,0 +1,21 @@
+11.03 도커 이어서
+
+컨테이너가 되고 안되고를 따라서 왜 실행이 되지 않는지 탐색하기 위한 학습
+도커 컨테이너를 들어가고 나가고 로그를 찍어볼수 있는 정도
+
+dhcp 동적할당??
+테라폼??
+
+확인사항
+09:43 run -d -p 8055:7777 --name test_boot3 kyuhon/test_19_boot3
+10:30 front와 backend 사이의 격리상태
+12:03 jenkins, argoCD
+	1. source 코드 변경 -> github, push
+	2. docker image 수정
+	3. docker hub에 push
+	4. 새로운 이미지를 활용하는
+	   k8s 파일에 변화
+	5. k8s의 변화된 파일대로
+	  컨테이너가 수정됨
+12:17 curl(client-url)
+	요청 테스트

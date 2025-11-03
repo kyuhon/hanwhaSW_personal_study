@@ -17,6 +17,11 @@ public class CalculatorController {
         this.calculatorService = calculatorService;
     }
 
+    @GetMapping("/health")
+    public String healthCheck(){
+        return "i'm Alive";
+    }
+
     @GetMapping("/plus")
     public ResponseEntity<CalculatorDTO> plusTwoNumbers(CalculatorDTO calculatorDTO){
         log.info("calculatorDTO = {}", calculatorDTO);
