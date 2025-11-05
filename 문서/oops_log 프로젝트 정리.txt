@@ -1,0 +1,56 @@
+oops_log 프로젝트 정리
+
+개인 db, 커뮤니케이션, ai
+
+제작의의
+sns는 상업적 목적이나 본인을 과시하기 위한 목적이 큰데
+저희 사이트는 sns보다 상대적으로 조금 마이너하고 
+좀더 나의 내면에 대한 성장의의가 큰 내향형 sns를 만드는것을 목표로 두었다
+
+
+공지사항 태그 신청방법
+	댓글로 신청??
+
+
+성장목표
+	AI가 최근 7일~30일간의 기록을 분석하여 반복된 패턴을 추출
+
+북마크
+	나의 기록과 타인의 기록
+
+팔로우
+
+
+AI용도
+감정분석, 텍스트 요약, 공감형 답변, 추천시스템
+
+SSE 용도
+	게시물에 댓글 작성, 좋아요, 힘내요 시에 알림기능
+	알림해제기능
+
+pwa
+	tailwindcss
+		
+Breakpoint prefix	Minimum width	CSS
+sm	40rem (640px)	@media (width >= 40rem) { ... }
+md	48rem (768px)	@media (width >= 48rem) { ... }
+lg	64rem (1024px)	@media (width >= 64rem) { ... }
+xl	80rem (1280px)	@media (width >= 80rem) { ... }
+2xl	96rem (1536px)	@media (width >= 96rem) { ... }
+
+<div class="sm:p-4 md:p-8 bg-white rounded-2xl shadow-lg text-center">
+  <h1 class="text-2xl md:text-4xl font-bold text-blue-600">Tailwind Example</h1>
+  <p class="mt-2 text-gray-600 md:text-lg">화면 크기에 따라 자동으로 바뀌는 반응형 디자인</p>
+  <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+
+
+프론트와 백에서의 각자의 역할
+	지금까지처럼 마이바티스와 jpa를 혼용해서 사용할것인가? 이전 프로젝트 처럼 사용하기로 함
+
+만든 코드는 반드시 주석 첨부
+	클래스 파일 설명, 메소드 설명은 필수
+	이해하기 어려운 로직코드는 선택적주석
+
+testcode - mockito사용
+	service - transaction테스트
+	controller - 프론트에서 오는 요청,응답 테스트
