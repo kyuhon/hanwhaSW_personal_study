@@ -19,3 +19,4 @@ ingress를 추가해서 이점
 		3. CORS안해도 됨(ingress가 인지한 것끼리 통신)
 	
 	pvc
+
