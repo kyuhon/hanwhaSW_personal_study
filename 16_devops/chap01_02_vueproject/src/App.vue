@@ -21,6 +21,15 @@
     const data = await response.json();
     sum.value = data.sum;
   }
+
+  /* 이후 코드는 post 요청에 따라서 데이터는 request body를 활용(백엔드도 수정) */
+  const response = await fetch('http://localhost:8055/plus', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8;'
+    },
+    body: JSON.stringify({num1: num1.value, num2: num2.value})
+  })
 </script>
 
 <style scoped>

@@ -13,5 +13,5 @@ public class CalculatorDTO {
     private Integer num1;
     @NonNull
     private Integer num2;
-    private int sum = 0;
+    private int sum;
 }
