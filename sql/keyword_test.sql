@@ -7,14 +7,14 @@ CREATE TABLE keyword_test (
 
 INSERT INTO keyword_test (keyword, emotion_type) VALUES
 -- 긍정
-('행복', '긍keyword_test정'),
+('행복', '긍정'),
 ('감사', '긍정'),
 ('기쁨', '긍정'),
 ('즐거움', '긍정'),
 ('만족', '긍정'),
 ('편안', '긍정'),
 ('설렘', '긍정'),
-('자랑스Oops_Log러움', '긍정'),
+('자랑스러움', '긍정'),
 ('성취', '긍정'),
 ('안정', '긍정'),
 ('희망', '긍정'),
