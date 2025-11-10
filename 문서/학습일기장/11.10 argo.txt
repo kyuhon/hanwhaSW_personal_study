@@ -1,0 +1,24 @@
+11.10 argo
+
+bitbucket
+비밀번호 저장 사이트
+
+terraform destroy
+
+groovy 문법
+	Jenkins 설정 작성하다가 나온 용어
+
+확인사항
+09:05 깃허브에서 webhook
+09:19 Argo CD(K8S)
+	GitOps 관점에시 출발한다
+10:42 jenkins의 pipeLine
+10:47 ArgoCD에서 제공되는 UI 접근
+		도커 데스크탑 실행
+		ngrok 실행
+			webhook경로 수정
+		argocd
+11:39 테스트코드
+	아키텍쳐
+	디자인패턴
+11:42 빌드 2번 하지만..
