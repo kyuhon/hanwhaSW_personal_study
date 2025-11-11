@@ -141,3 +141,29 @@ achivement - query - get	good
 
 webSecurity의 configure() 와 SecurityConfig에서 filterChain() 두 개 모두 보안 체인을 설정
 	WebSecurity 주석처리
+
+
+---------------------------------------------------------------------------------------------------------------
+
+ai분석 - 포스트방식
+requestbody
+{
+	"content":"오늘 하루 너무 우울했어"
+}
+responsebody
+
+{
+    "feedback": "정말 힘든 하루였겠다… 마음이 아프네. 너의 기분이 좀 나아지길 바란다.",
+    "relatedTags": [
+        "우울",
+        "슬픔",
+        "불안"
+    ]
+}
+
+게시글 작성 - post 방식
+
+requestbody
+
+
+

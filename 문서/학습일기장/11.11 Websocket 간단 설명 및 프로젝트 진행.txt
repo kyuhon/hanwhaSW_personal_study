@@ -1,0 +1,18 @@
+11.11 Websocket 간단 설명 및 프로젝트 진행
+
+SockJS -> Websocket -> streaming -> polling
+
+stomp
+
+ai발표
+
+해당 ai를 사용하는 방법으로는 aiservice와 aicontroller 2개의 클래스파일을 만들어서 로직을 작성했습니다
+aicontroller에서 하나의 url에 aiservice 2개의 메서드가 각각 ai모델을 요청하는데
+requestbody에 제이슨 방식으로 글을 작성하면 해당 글을 하나의 메소드는 ai가 분석하여 응답해주고 
+하나의 메소드는 AiReadMapper에 있는 태그를 조회해서 해당 글에 맞는 감정태그를 선택해줍니다
+
+동작 과정으로는 AiService에서는 Rest 통신을 위해 RestTemplate 객체를 생성하고 요청 헤더에 JSON 타입 지정
+및 인증 토큰을 설정합니다
+요청 본문에는 대화 모델 형식에 맞춰 메시지 배열을 구성하고 해당 url에 포스트 요청을 받아서 AI가 생성한
+피드백을 문작으로 반환합니다
+AiController에서는 해당되는 2개의 메소드를 ObjectMapper로 파싱하여 실제 배열 형태로 변환하여 응답합니다
