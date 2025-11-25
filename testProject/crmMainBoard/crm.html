@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>한화리조트 B2B CRM/ERP 대시보드</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f5f6fa;
+      color: #222;
+    }
+
+    /* 사이드바 */
+    .sidebar {
+      width: 260px;
+      background: #111827;
+      color: #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f97316, #facc15);
+    }
+
+    .sidebar-section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 18px 0 8px;
+      color: #9ca3af;
+    }
+
+    .nav-list {
+      list-style: none;
+    }
+
+    .nav-item {
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-item span.badge {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #f97316;
+      color: #111827;
+    }
+
+    .nav-item.active {
+      background: #f97316;
+      color: #111827;
+      font-weight: 600;
+    }
+
+    .nav-item:hover:not(.active) {
+      background: #1f2937;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 12px;
+      color: #6b7280;
+      padding-top: 16px;
+      border-top: 1px solid #1f2937;
+    }
+
+    /* 메인 레이아웃 */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 24px;
+      gap: 16px;
+    }
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .title-block h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .title-block p {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .select {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      font-size: 13px;
+    }
+
+    .button {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: none;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 600;
+    }
+
+    .button-ghost {
+      background: transparent;
+      border: 1px solid #d1d5db;
+      color: #374151;
+    }
+
+    /* 상단 KPI 카드 */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .kpi-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px 14px;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+    }
+
+    .kpi-value {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .kpi-sub {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .kpi-trend {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .kpi-trend.up {
+      color: #16a34a;
+    }
+
+    .kpi-trend.down {
+      color: #dc2626;
+    }
+
+    /* 메인 콘텐츠 영역 */
+    .content-row {
+      display: grid;
+      grid-template-columns: 2.1fr 1.4fr;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .panel {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .panel-subtitle {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
+    .panel-header-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .tag {
+      padding: 4px 8px;
+      font-size: 11px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+
+    /* 차트 / 와이어프레임 박스 */
+    .placeholder {
+      border-radius: 10px;
+      border: 1px dashed #d1d5db;
+      background: repeating-linear-gradient(
+        135deg,
+        #f9fafb,
+        #f9fafb 8px,
+        #f3f4f6 8px,
+        #f3f4f6 16px
+      );
+      padding: 16px;
+      font-size: 12px;
+      color: #6b7280;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 160px;
+    }
+
+    .placeholder.small {
+      min-height: 80px;
+    }
+
+    /* 표 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    th, td {
+      padding: 6px 4px;
+      text-align: left;
+    }
+
+    th {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b7280;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    tr + tr td {
+      border-top: 1px solid #f1f5f9;
+    }
+
+    td.status-pill {
+      font-size: 11px;
+    }
+
+    .pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      display: inline-block;
+    }
+
+    .pill-hot {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .pill-warm {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .pill-cold {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    /* 하단 2열 */
+    .bottom-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1.2fr;
+      gap: 16px;
+    }
+
+    .list-item {
+      font-size: 12px;
+      padding: 6px 0;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .list-item:last-child {
+      border-bottom: none;
+    }
+
+    .list-title {
+      font-weight: 500;
+    }
+
+    .list-meta {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .badge-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      margin-right: 4px;
+      background: #22c55e;
+    }
+
+    /* 반응형 */
+    @media (max-width: 1024px) {
+      .kpi-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .content-row,
+      .bottom-row {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none; /* 필요하면 모바일 토글 메뉴로 변경 가능 */
+      }
+
+      .main {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 사이드바 -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-badge"></div>
+      <div>Hanwha Resort<br /><span style="font-size:11px; color:#9ca3af;">설악·속초 B2B ERP</span></div>
+    </div>
+
+    <div>
+      <div class="sidebar-section-title">메인</div>
+      <ul class="nav-list">
+        <li class="nav-item active">대시보드</li>
+        <li class="nav-item">기업 고객 목록</li>
+        <li class="nav-item">예약 & 일정</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="sidebar-section-title">영업 & CRM</div>
+      <ul class="nav-list">
+        <li class="nav-item">
+          파이프라인
+          <span class="badge">8 Hot</span>
+        </li>
+        <li class="nav-item">계약 & 견적</li>
+        <li class="nav-item">리텐션 캠페인</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="sidebar-section-title">운영</div>
+      <ul class="nav-list">
+        <li class="nav-item">객실 & 부대시설 배정</li>
+        <li class="nav-item">리포트 & 통계</li>
+      </ul>
+    </div>
+
+    <div class="sidebar-footer">
+      설악·속초 단체 고객 운영 현황을<br />한 화면에서 관리합니다.
+    </div>
+  </aside>
+
+  <!-- 메인 영역 -->
+  <main class="main">
+    <!-- 헤더 -->
+    <header class="main-header">
+      <div class="title-block">
+        <h1>설악·속초 단체 고객 대시보드</h1>
+        <p>기업 단체 고객 유치 · 동선 · 부대시설 · 리텐션 현황 한 눈에 보기</p>
+      </div>
+      <div class="filters">
+        <select class="select">
+          <option>전체 지점 (설악 쏘라노 + 별관)</option>
+          <option>설악 쏘라노</option>
+          <option>설악 별관</option>
+        </select>
+        <select class="select">
+          <option>이번 달</option>
+          <option>지난 달</option>
+          <option>올해 전체</option>
+        </select>
+        <button class="button button-ghost">보고서 내보내기</button>
+        <button class="button button-primary">새 단체 문의 등록</button>
+      </div>
+    </header>
+
+    <!-- KPI -->
+    <section class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">이번 달 방문 확정 단체 수</div>
+        <div class="kpi-value">18개</div>
+        <div class="kpi-sub">전월 대비 <span class="kpi-trend up">+4개</span></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">예상 투숙 인원 (합계)</div>
+        <div class="kpi-value">1,320명</div>
+        <div class="kpi-sub">객실 + 워터피아 + 연회 포함</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">단체 매출 예상액</div>
+        <div class="kpi-value">₩ 480M</div>
+        <div class="kpi-sub"><span class="kpi-trend up">+12%</span> YoY</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">재방문 단체 비율</div>
+        <div class="kpi-value">64%</div>
+        <div class="kpi-sub">리텐션 캠페인 영향</div>
+      </div>
+    </section>
+
+    <!-- 상단 콘텐츠 -->
+    <section class="content-row">
+      <!-- 왼쪽: 예약/수요/부대시설 -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <div class="panel-title">월별 객실·부대시설 수요 추이</div>
+            <div class="panel-subtitle">단체 객실 + 워터피아 + 조식 이용량 기반 수요 패턴</div>
+          </div>
+          <div class="panel-actions">
+            <span class="tag">월별</span>
+            <span class="tag">객실 타입별</span>
+          </div>
+        </div>
+        <div class="placeholder">
+          [차트 영역]  
+          <br />- X축: 날짜 / Y축: 이용률(%)  
+          <br />- 라인1: 객실 점유율 (단체)  
+          <br />- 라인2: 워터피아 입장률  
+          <br />- 라인3: 조식 좌석 점유율
+        </div>
+      </section>
+
+      <!-- 오른쪽: 파이프라인 / 리텐션 -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <div class="panel-title">단체 영업 파이프라인</div>
+            <div class="panel-subtitle">문의 → 상담 → 제안 → 계약 진행 현황</div>
+          </div>
+          <div class="panel-actions">
+            <span class="tag">Hot 5</span>
+            <span class="tag">이번 달 마감 3건</span>
+          </div>
+        </div>
+        <div class="placeholder small">
+          [파이프라인 시각화]  
+          <br />STEP1 문의 (15) → STEP2 상담 (9) → STEP3 제안 (6) → STEP4 계약 (3)
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>기업명</th>
+              <th>상태</th>
+              <th>예상 행사일</th>
+              <th>예상 매출</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>A그룹 인재개발원</td>
+              <td class="status-pill"><span class="pill pill-hot">Hot / 제안서 발송</span></td>
+              <td>10월 21~23일</td>
+              <td>₩ 80M</td>
+            </tr>
+            <tr>
+              <td>B전자 사업본부</td>
+              <td class="status-pill"><span class="pill pill-warm">Warm / 일정조율중</span></td>
+              <td>11월 3~4일</td>
+              <td>₩ 35M</td>
+            </tr>
+            <tr>
+              <td>C대학교 MT</td>
+              <td class="status-pill"><span class="pill pill-hot">Hot / 계약서 검토</span></td>
+              <td>9월 6~7일</td>
+              <td>₩ 22M</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+    <!-- 하단 콘텐츠 -->
+    <section class="bottom-row">
+      <!-- 왼쪽: 다가오는 단체 일정 & 동선 -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <div class="panel-title">다가오는 단체 일정 & 동선</div>
+            <div class="panel-subtitle">체크인 · 조식 · 워터피아 · 회의실 이용 타임라인</div>
+          </div>
+        </div>
+        <div class="placeholder small">
+          [타임라인 와이어프레임]  
+          <br />- X축: 시간대 / Y축: 시설  
+          <br />- 기업별 색상으로 동선 표시
+        </div>
+        <div class="list-item">
+          <div>
+            <div class="list-title">A그룹 인재개발원 (200명)</div>
+            <div class="list-meta">체크인 14:00 · 조식 07:00/08:30 · 워터피아 16:00 · 회의실 19:00</div>
+          </div>
+          <div class="list-meta">10월 21일</div>
+        </div>
+        <div class="list-item">
+          <div>
+            <div class="list-title">C대학교 MT (120명)</div>
+            <div class="list-meta">체크인 15:00 · 바비큐장 18:00 · 워터피아 20:00</div>
+          </div>
+          <div class="list-meta">9월 6일</div>
+        </div>
+        <div class="list-item">
+          <div>
+            <div class="list-title">B전자 본부 워크숍 (80명)</div>
+            <div class="list-meta">회의실 14:00 · 연회장 18:00 · 야간 바다산책 코스</div>
+          </div>
+          <div class="list-meta">11월 3일</div>
+        </div>
+      </section>
+
+      <!-- 오른쪽: 리텐션 / 알림 -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <div class="panel-title">리텐션 & 알림 센터</div>
+            <div class="panel-subtitle">“작년 이맘때 방문” 단체 및 시즌 이벤트 기반 제안</div>
+          </div>
+          <div class="panel-actions">
+            <span class="tag">리텐션 캠페인 4건 진행중</span>
+          </div>
+        </div>
+        <div class="list-item">
+          <div>
+            <div class="list-title"><span class="badge-dot"></span>D사 인사팀 리더십 연수</div>
+            <div class="list-meta">작년 10월 10~12일 방문 · 올해도 비슷한 일정 추천</div>
+          </div>
+          <div class="list-meta">알림 발송 예정</div>
+        </div>
+        <div class="list-item">
+          <div>
+            <div class="list-title"><span class="badge-dot"></span>E공사 기술연수원</div>
+            <div class="list-meta">연 2회 방문 기업 · Gold 등급 유지</div>
+          </div>
+          <div class="list-meta">재계약 제안</div>
+        </div>
+        <div class="list-item">
+          <div>
+            <div class="list-title"><span class="badge-dot"></span>단풍 시즌 타겟 캠페인</div>
+            <div class="list-meta">10~11월 설악 단풍 코스 + 워터피아 패키지 제안 대상 12개 기업</div>
+          </div>
+          <div class="list-meta">캠페인 ON</div>
+        </div>
+        <div class="placeholder small">
+          [요약 카드]  
+          <br />- 이번 달 리텐션 대상 기업 수  
+          <br />- 이메일/전화 캠페인 현황  
+          <br />- 재방문 확정 단체 비율
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
