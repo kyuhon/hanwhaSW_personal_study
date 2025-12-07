@@ -19,3 +19,6 @@ spring:
     username: guest
     password: guest
 
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: org.example.customer.domain
