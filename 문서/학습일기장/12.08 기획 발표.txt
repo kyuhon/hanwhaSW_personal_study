@@ -1,0 +1,13 @@
+12.08 기획 발표
+
+기능, 일정, 신기능 테스트 기간
+
+n8m
+
+
+가로축: 사용자 업무 플로우(Sales → Contract → AssetAssignment → Install → Service)
+고객관리 → 영업/견적 → 계약 → 자산배정 → 설치 → AS → 해지
+
+
+세로축: 배타성(규칙 주인의 독립성)
+Customer / Sales / Contract / Asset / Install / Service / Billing
