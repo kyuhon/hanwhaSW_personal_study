@@ -254,20 +254,17 @@ WHERE name LIKE '%프린터%';
 
 
 	공통
-		/contractdetail/common/{id} - get method
+		/contractdetail/{id} - get method
 			계약진행률, 시작일, 마감일, 계약 종료까지 남은 일수
 			납부완료, 총 납부액, 렌탈 자산, as처리 건수, 연체 이력
 
-	계약 개요
-		/contractdetail/outline/{id} - get method - 계약, 고객, 제품
+	계약 개요 - 계약, 고객, 제품
 			기본 계약 정보(특약사항 포함), 결제 조건, 계약한 제품내역
 		
-	결제 내역
-		/contractdetail/payment/{id} - get method - 계약
+	결제 내역 - 계약
 			정상납부 퍼센트, 총납부 완료액, 다음 납부 예정일
 			
-	타임라인
-		/contractdetail/timeline/{id} - get method - 계약, 고객, 제품
+	타임라인 - 계약, 고객, 제품
 			계약에 대한 생애주기 
 				계약이 시작되고부터 완료되기 까지 상태 변경에 대한 이력 조회
 				ex) 계약시작, 정기납부, 추가렌탈, as처리
@@ -278,18 +275,18 @@ WHERE name LIKE '%프린터%';
 
 신규 계약 등록 *****************
 
+해당 고객을 클릭하고 다음을 누르면 redis에 임시저장 -> ttl 시간 설정해주기 x
+			클라이언트에 임시저장
+
 	고객선택
 		고객테이블에 아이디, 이름, 담당자, 번호 
 		그리고 세그먼트 아이디를 토대로 조인한 세그먼트 이름 조회
 		블랙리스트 제외하고 고객목록 select
 		
-		해당 고객을 클릭하고 다음을 누르면 redis에 임시저장 -> ttl 시간 설정해주기
-
+		
 	계약 정보 및 렌탈 상품
 		계약명 작성 후 제품 테이블에 대여가능 상태인 상품 조회 및 자산 추가
 		해당 고객의 상태에 따른 프로모션 선택 ??
-		
-		자산 추가 후 프로모션 선택 후에 다음 클릭시 redis에 임시저장
 		
 	결제 조건
 		이전 정보를 토대로 월 납부액 및 계약 총액 계산
@@ -297,25 +294,78 @@ WHERE name LIKE '%프린터%';
 		해당 고객의 상태에 따른 쿠폰 선택 ??
 
 		특약사항 글자수 제한 넣기(650자)
-		결제 조건 기입 후에 다음 클릭시 redis에 임시저장
+		emp_position
+			1 대표, 2 고객관리팀장, 3 영업관리팀장, 4 제품관리팀장, 5 팀원
+		 
 
 	결제
 		전자결제 현황, 결제선 지정
 
-		결제 설정 후에 다음 클릭시 redis에 임시저장
-
 	검토 및 제출
-		redis에 저장된 내역 조회
+		클라이언트에 저장된 내역 조회
 		승인 요청 시 각각의 테이블에 create
 
-	/contract - post method - 
+	/contract - post method
+		계약명, 계약 시작일, 계약기간, 월 납부액, 계약 총액, 결제 방법(자동이체(A), 계좌이체(B)), 특약사항, 고객목록 번호
+		사원 ID(팀원), 사원ID(팀장), 사원ID(대표)
+		
+		자동생성 - 계약 코드(클래스 파일), 계약상태(결제대기(W)), 현재승인단계(팀원 승인:1)
+		계약 인스턴스 1개, 결제 인스턴스 1개, 결제 승인자 매핑 인스턴스 3개 생성
+
+
+	/contract - patch method
+		계약명, 특약사항, 
+		
+		CREATE TABLE contract (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  contract_code VARCHAR(30) NOT NULL UNIQUE, -- CON-2025-001
+  name VARCHAR(255) NOT NULL,
+  start_date DATETIME NOT NULL,
+  contract_period INTEGER NOT NULL,
+  status VARCHAR(1) NOT NULL,
+  monthly_payment INTEGER NULL,
+  total_amount BIGINT NOT NULL,
+  pay_method VARCHAR(1) NOT NULL,
+  special_content VARCHAR(2000) NULL,
+  current_step TINYINT NOT NULL,
+  cum_id BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE approval (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  approval_code VARCHAR(30) NOT NULL UNIQUE, -- APP-2025-001
+  title VARCHAR(255) NOT NULL,
+  content VARCHAR(2000) NOT NULL,
+  request_date DATETIME NOT NULL,
+  approval_date DATETIME NOT NULL,
+  status VARCHAR(1) NOT NULL,
+  contract_id BIGINT UNSIGNED NOT NULL,
+  emp_id BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE approval_mapping (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  emp_id BIGINT UNSIGNED NOT NULL,
+  approval_id BIGINT UNSIGNED NOT NULL,
+  step INTEGER NULL,
+  is_approved VARCHAR(1) NULL,
+  reject_reason VARCHAR(255) NULL,
+  PRIMARY KEY (id)
+);
+
+계약인증 *****************
+
 
 
 결제관리 *****************
 
 	대기
 		현재 로그인된 직원과 직급에 대해서 권한받은 결제선의 목록이 나오고 승인이나 반려할수 있음
-		승인이나 반려시에
+		현재 결제내역이 나오지만 이전 내역이 승인되지 않으면 클릭이 안되고
+			 이전 결제가 완료되어야 진행할 수 있습니다
+		라는 문구가 나옴
 
 	진행
 		현재 로그인된 직원과 직급에 대해서 권한받은 렌탈계약이 반려되지 않고 결제가 진행중인 내역이 나옴
@@ -323,7 +373,12 @@ WHERE name LIKE '%프린터%';
 
 	완료
 		현재 로그인된 직원과 직급에 대해서 권한받은 렌탈계약이 반려되거나 렌탈 계약이 진행중인 내역이 나옴
-		본인의 승인한 렌탈계약이 반려되지 않고 결제가 진행중인 내역
+		본인이 승인한 렌탈계약이 반려되거나 결제가 완료된 내역
 
 
 
+
+
+
+마무리 *****************
+코드 정리 단계
