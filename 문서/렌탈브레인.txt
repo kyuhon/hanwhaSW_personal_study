@@ -282,6 +282,11 @@ WHERE name LIKE '%프린터%';
 		고객테이블에 아이디, 이름, 담당자, 번호 
 		그리고 세그먼트 아이디를 토대로 조인한 세그먼트 이름 조회
 		블랙리스트 제외하고 고객목록 select
+		순우
+		customer 테이블 id, customer_code, name, in_charge , 
+				segement_id와 동일한 segment 테이블에 id에서 name컬럼
+		블랙리스트(segment테이블 id 6번) 제외하고 is_deleted가 N인 인스턴스 
+		name과 in_charge 검색 가능하고 페이지네이션 포함
 		
 		
 	계약 정보 및 렌탈 상품
