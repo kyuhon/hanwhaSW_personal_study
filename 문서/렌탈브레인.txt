@@ -273,7 +273,9 @@ WHERE name LIKE '%프린터%';
 	계약수정
 		수정할 데이터 ??
 
+
 신규 계약 등록 *****************
+
 
 해당 고객을 클릭하고 다음을 누르면 redis에 임시저장 -> ttl 시간 설정해주기 x
 			클라이언트에 임시저장
@@ -317,9 +319,6 @@ WHERE name LIKE '%프린터%';
 		자동생성 - 계약 코드(클래스 파일), 계약상태(결제대기(W)), 현재승인단계(팀원 승인:1)
 		계약 인스턴스 1개, 결제 인스턴스 1개, 결제 승인자 매핑 인스턴스 3개 생성
 
-
-	/contract - patch method
-		계약명, 특약사항, 
 		
 		CREATE TABLE contract (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -387,3 +386,103 @@ CREATE TABLE approval_mapping (
 
 마무리 *****************
 코드 정리 단계
+
+
+
+api명세서 **********************************
+
+***계약***
+
+/contract/list
+get method
+계약 전체 조회
+	페이지네이션과 필터 구현
+
+
+/contract/status
+get method
+	진행중 계약, 만료임박, 신규계약
+
+
+/contract/detail/{id}
+get method
+계약 상세보기
+	상세계약상태
+
+	상세계약개요
+
+	상세계약렌탈자산
+
+
+/contract
+post method
+
+
+
+
+
+
+***결제***
+
+
+/approval/status
+get method
+
+결제 대기 건수, 진행중 건수, 결제 완료 건수, 반려 건수0
+
+
+/approval/request
+get method
+
+사용자의 결제가 필요한 내역
+
+
+/approval/process
+get method
+
+사용자의 결제가 진행된 내역
+
+
+/approval/complete
+get method
+
+사용자의 결제가 완료된 내역
+
+
+/approval
+patch method
+
+사용자의 결제가 필요한 내역에 대한 승인이나 반려(상태변경)
+
+***************** 다른 패키지에서 사용해야할 api
+
+
+/api/customer/contract
+get method
+
+계약시에 고객 목록 저장
+customer 테이블 id, customer_code, name, in_charge , 
+segement_id와 동일한 segment 테이블에 id에서 name컬럼
+      
+블랙리스트(segment테이블 id 6번) 제외하고 is_deleted가 N인 인스턴스 
+      
+name과 in_charge 검색 가능하고 페이지네이션 포함
+
+
+
+/item/contract
+get method
+상태가 렌탈가능한 상태인 제품목록과 렌탈가능 재고량
+
+
+고객의 세그먼트에 대한 프로모션 조회
+
+해당 프로모션 사용 시 이력등록
+
+고객의 세그먼트에 대한 쿠폰 조회
+
+해당 쿠폰 사용 시 이력등록
+
+
+
+***************************************************
