@@ -417,9 +417,39 @@ get method
 /contract
 post method
 
+requestBody 예시
+{
+  "contractName": "사무기기 렌탈 계약",
+  "startDate": "2025-01-01T00:00:00",
+  "contractPeriod": 12,
+  "monthlyPayment": 500000,
+  "totalAmount": 6000000,
+  "payMethod": "A",
+  "specialContent": "설치 및 유지보수 포함",
+  "cumId": 3,
+  "memId": 3,
+  "leaderId": 4,
+  "ceoId": 5,
+   "items": [
+    {
+      "itemName": "업무용 미니 PC",
+      "quantity": 3
+    },
+    {
+      "itemName": "고성능 워크스테이션",
+      "quantity": 2
+    }
+  ]
+}
 
+미구현
+해당 사용자의 직책이 맞는지 확인
 
-
+contract 인스턴스 1개 생성
+approval 인스턴스 1개 생성
+approval_mapping 인스턴스 3개 생성
+해당 item 렌탈중으로 상태변경
+계약된 개수만큼 contract_with_item만큼 인스턴스 생성
 
 
 ***결제***
@@ -428,13 +458,30 @@ post method
 /approval/status
 get method
 
-결제 대기 건수, 진행중 건수, 결제 완료 건수, 반려 건수0
+결제 대기 건수, 결제 승인 건수, 결제 반려 건수
+진행중 건수, 결제 완료 건수
 
 
-/approval/request
+인덱싱(미구현)
+CREATE INDEX idx_approval_mapping_emp
+ON approval_mapping(emp_id, is_approved);
+
+CREATE INDEX idx_approval_mapping_approval
+ON approval_mapping(approval_id, is_approved);
+
+
+
+/approval/pending
 get method
 
 사용자의 결제가 필요한 내역
+
+
+/approval/{id}
+patch method
+
+approval_mapping 아이디의 상태 변경(승인이나 반려)
+
 
 
 /approval/process
