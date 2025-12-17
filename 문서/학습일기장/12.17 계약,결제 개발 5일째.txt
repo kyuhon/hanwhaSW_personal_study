@@ -1,0 +1,108 @@
+12.17 계약,결제 개발 5일째
+
+결제내역
+ 테이블, 더미 clear
+
+내일까지 일의 진척도 파악하기
+
+CREATE TABLE payment_details (
+                              id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                              payment_due DATETIME NOT NULL,
+                              payment_actual DATETIME NULL,
+                              overdue_days INTEGER NULL,
+                              payment_status VARCHAR(1) NOT NULL,
+                              con_id BIGINT UNSIGNED NOT NULL,
+                              PRIMARY KEY (id)
+);
+
+ALTER TABLE payment_details
+    ADD CONSTRAINT FK_con_id_TO_contract FOREIGN KEY (con_id) REFERENCES contract (id);
+
+    INSERT INTO payment_details
+(payment_due, payment_actual, overdue_days, payment_status, con_id)
+VALUES
+-- ✅ 납부 완료 (Complete)
+('2025-01-15 00:00:00', '2025-01-15 10:30:00', 0, 'C', 4),
+('2025-02-15 00:00:00', '2025-02-16 09:20:00', 1, 'C', 4),
+('2025-03-15 00:00:00', '2025-03-15 14:00:00', 0, 'C', 4),
+('2025-04-15 00:00:00', '2025-04-17 11:10:00', 2, 'C', 4),
+
+-- ❌ 미납 (NonPayment)
+('2025-05-15 00:00:00', NULL, 20, 'N', 4),
+('2025-06-15 00:00:00', NULL, 10, 'N', 4),
+
+-- ⏳ 예정 (Pending)
+('2025-07-15 00:00:00', NULL, NULL, 'P', 4),
+('2025-08-15 00:00:00', NULL, NULL, 'P', 4),
+('2025-09-15 00:00:00', NULL, NULL, 'P', 4),
+('2025-10-15 00:00:00', NULL, NULL, 'P', 4),
+('2025-11-15 00:00:00', NULL, NULL, 'P', 4),
+('2025-12-15 00:00:00', NULL, NULL, 'P', 4);
+
+
+
+해야할 일 정리
+
+1순위
+
+계약 등록 시 고객 선택 조회
+계약 등록 시 결제선 지정에 사원 선택
+
+
+계약 상세보기 조회
+결제내역에 대한 상태변경
+
+사용자에게 온 결제 승인이나 거절
+
+
+
+2순위
+창훈
+SELECT A.ID, A.STATUS, A.LAST_INSPECT_DATE, A.name
+FROM item A
+JOIN contract_with_item B ON A.ID = B.ITEM_ID
+JOIN contract C ON B.CONTRACT_ID = C.ID
+WHERE C.CUM_ID = 1;
+as추가할 때 고객 별 제품 선택을 위한 쿼리 조회
+	계약, 자산 연결 여부를 확인하는거 까지의 조회 api가 필요
+
+
+고민사항
+AS처리 이력을 넣어야하나...
+
+***********************************************************************************
+
+이걸 물어보는게 조금 selectCompletedApprovals가 조금 이상하게 느껴져서 그래 지금 approval_mapping 테이블의 인스턴스들은 아래와 같아
+
+"id"	"emp_id"	"approval_id"	"step"	"is_approved"	"reject_reason"
+"1"	"1"	"1"	"1"	"Y"	\N
+"2"	"3"	"1"	"2"	"Y"	\N
+"3"	"1"	"2"	"1"	"Y"	\N
+"4"	"3"	"2"	"2"	"Y"	\N
+"5"	"1"	"4"	"1"	"Y"	\N
+"6"	"2"	"4"	"2"	"N"	"조건 재협상 필요"
+"7"	"1"	"6"	"1"	"Y"	\N
+"8"	"2"	"6"	"2"	"Y"	\N
+"9"	"1"	"9"	"1"	"Y"	\N
+"10"	"3"	"9"	"2"	"Y"	\N
+"11"	"3"	"1"	"1"	"U"	\N
+"12"	"4"	"1"	"2"	"U"	\N
+"13"	"5"	"1"	"3"	"U"	\N
+"14"	"3"	"2"	"1"	"U"	\N
+"15"	"4"	"2"	"2"	"U"	\N
+"16"	"5"	"2"	"3"	"U"	\N
+"17"	"3"	"3"	"1"	"Y"	\N
+"18"	"4"	"3"	"2"	"U"	\N
+"19"	"5"	"3"	"3"	"U"	\N
+"20"	"3"	"4"	"1"	"Y"	\N
+"21"	"4"	"4"	"2"	"N"	\N
+"22"	"5"	"4"	"3"	"U"	\N
+"35"	"3"	"9"	"1"	"Y"	\N
+"36"	"4"	"9"	"2"	"Y"	\N
+"37"	"5"	"9"	"3"	"Y"	\N
+
+위의 컬럼값들을 비교해봤을 때 approval_id 동일한 인스턴스들 중에 전부 Y상태이거나 하나라도 N인 상태가 있을 때 결과가 보여줘야하는데 위의 값들을 봤을 때 사용자 3번을 검색하면 
+
+***********************************************************************************
+
+카프카 대신 quartz....
