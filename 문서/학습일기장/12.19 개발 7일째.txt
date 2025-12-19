@@ -38,3 +38,31 @@ WHERE C.CUM_ID = 1;
 계약 승인 로직
 이제 여기서 리팩토링을 해야하는데 approval_mapping 테이블 id에서 approval_id의 컬럼값이 다른 인스턴스에도 존재할 때 전부 Y상태라면 해당 approval_id의 컬럼값을 아이디로 가지고 있는 Approval 테이블의 인스턴스에서 approval_date에 현재 날짜와 시간이 등록되고 status가 A로 변경되며 contract_id 의 값과 동일한 contract 테이블의 아이디를 가진 인스턴스에서 status가 P로 변경되고 start_date의 날짜부터 contract_period(개월수) 만큼의 인스턴스가 payment_details 테이블에 insert되는데 해당 컬럼중에 payment_due가 있는데 start_date부터 개월 단위로 1달씩 증가된 날짜가 입력돼
 그리고 Y상태가 아니라면 해당 approval_mapping테이블의 approval_id의 컬럼값을 가지고 있는 approval의 contract_id의 컬럼값을 가지는 contract 테이블에서 승인한 approval_mapping테이블의 인스턴스의 step과 동일한 숫자가 contract테이블의 current_step에 입력돼
+
+
+
+이전 작업과 다음주에 할 일에 대한 정리
+
+형석
+고객 세그먼트분석 백엔드 완료
+다음주 월요일까지 쿼츠를 사용해서 세그먼트가 변경되는 것 쿠폰과 프로모션이 연결되는것
+	고객분석탭 AI빼고 다 해온다
+프론트는 빠르면 다음주 화요일
+1월 2일부터 발표준비 예정
+
+승우
+고객목록 조회, 등록, 수정, 삭제, 복구
+고객목록에 검색기능과 필터 완료
+세그먼트 기준표 넣기
+상세조회에서 종합정보에 기본정보, 네모, 히스토리 기능 구현
+정보수정, 고객삭제 -> 고객삭제, 복원 
+
+다음주 월요일
+고객목록, 고객응대 마무리
+
+지현
+알림기능 cud기능 구현
+알림이 필요한 곳에 기생 예정
+프론트 알림창은 구현은 됐지만 프론트 완성되면 기생 예정
+개인 프로필창, 관리자 메뉴에 사원관리 예정
+ 
