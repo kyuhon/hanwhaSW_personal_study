@@ -86,4 +86,49 @@ SELECT
         ON c.segment_id = s.id
     WHERE c.is_deleted = 'N'
       AND c.segment_id <> 6
-    ORDER BY c.id DESC
+    ORDER BY c.id DESC;
+    
+SELECT A.ID, A.name, A.STATUS, A.LAST_INSPECT_DATE, C.cum_id
+FROM item A
+JOIN contract_with_item B ON A.ID = B.ITEM_ID
+JOIN contract C ON B.CONTRACT_ID = C.ID
+JOIN approval D ON C.id = D.contract_id
+WHERE approval_date IS NOT NULL AND A.status = "S" AND C.ID = 1
+ORDER BY A.id DESC;
+
+SELECT id, payment_due, payment_actual, overdue_days, payment_status, con_id
+FROM payment_details
+WHERE con_id = 4;
+
+SELECT
+        v.approval_mapping_id   AS approvalMappingId,
+        v.approver_emp_id       AS approverEmpId,
+        v.approval_step         AS approvalStep,
+        v.is_approved           AS isApproved,
+        v.approval_code         AS approvalCode,
+        v.approval_title        AS approvalTitle,
+        v.request_date          AS requestDate,
+        v.request_emp_id        AS requestEmpId,
+        v.employee_code         AS employeeCode,
+        v.employee_name         AS employeeName,
+        v.position_name         AS positionName
+    FROM v_approval_payment_manage v
+    WHERE v.approver_emp_id = 6
+      AND v.is_approved = 'U'
+      AND NOT EXISTS (
+          SELECT 1
+          FROM v_approval_payment_manage prev
+          WHERE prev.approval_code = v.approval_code
+            AND prev.approval_step < v.approval_step
+            AND prev.is_approved != 'Y'
+      )
+    ORDER BY v.request_date DESC;
+
+
+UPDATE `item`
+SET `status` = 'P';
+
+SET FOREIGN_KEY_CHECKS = 0;
+DELETE FROM contract_with_item;
+SET FOREIGN_KEY_CHECKS = 1;
+
