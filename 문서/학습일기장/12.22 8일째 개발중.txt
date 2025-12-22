@@ -1,0 +1,59 @@
+12.22 8일째 개발중
+
+ai 사용
+프론트 시작
+오픈 ai api 팀원들도 사용할수 있는거??
+
+내일 정기멘토링 보여줄게 없다
+
+getCurrentEmpId() 
+
+eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZW50YWwwMDciLCJhdXRoIjpbIkFTU0VUX1JFQUQiLCJDQU1QQUlHTl9SRUFEIiwiQ09OVFJBQ1RfV1JJVEUiLCJDVVNUT01FUl9BTkFMWVNJU19SRUFEIiwiQ1VTVE9NRVJfREVMRVRFIiwiREFTSEJPQVJEX1JFQUQiLCJPVkVSRFVFX1BST0NFU1MiLCJRVU9URV9XUklURSJdLCJleHAiOjE3NjYzNjg5Mzh9.Y_D75WgbdR80KuyeA8NFSunSg8FKcNDZsKOemjU5AhENDOwvssprnobKzhVjcvjwywC2bPwPjhseIbzljYYdlA
+
+백
+번호생성기 수정확인하기	??
+계약관리 조회 결제대기중과 결제거절까지 표기 check
+SecurityUtil 삭제 -> serviceImpl 수정 check
+대표 계약 생성시 결제내역까지 생성 후 계약진행에 대한 상태변경 처리	check
+
+프론트
+element plus 페이지네이션 적용하기
+
+
+계약 생성 시 is_deleted=N인 고객만 생성가능 Y면 예외처리
+
+포스트맨
+
+
+
+
+
+
+강사님말씀
+트레이드오프 코드 단위가 아닌 비즈니스, 제칼카스텔 , md파일 - 수동레그, 세컨드 브레인, 인박셀? 인박스?
+
+
+
+INSERT 실패 시 코드 재생성 & 재시도 (가장 많이 씀)
+@Transactional
+public void createContract(ContractCreateDTO dto) {
+
+    int retry = 0;
+    final int MAX_RETRY = 3;
+
+    while (true) {
+        try {
+            String code = codeGenerator.generate(CodeType.CONTRACT);
+            ContractCommandEntity contract = ContractCommandEntity.create(dto, code);
+
+            contractRepository.save(contract);
+            return;
+
+        } catch (DataIntegrityViolationException e) {
+            // contract_code UNIQUE 충돌
+            if (++retry >= MAX_RETRY) {
+                throw new IllegalStateException("계약 코드 생성에 실패했습니다. 다시 시도해주세요.");
+            }
+        }
+    }
+}
