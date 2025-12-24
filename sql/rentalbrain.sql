@@ -129,6 +129,6 @@ UPDATE `item`
 SET `status` = 'P';
 
 SET FOREIGN_KEY_CHECKS = 0;
-DELETE FROM customer;
+DELETE FROM contract;
 SET FOREIGN_KEY_CHECKS = 1;
 
