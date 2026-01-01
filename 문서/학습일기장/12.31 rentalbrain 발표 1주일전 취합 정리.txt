@@ -7,10 +7,10 @@ UI 변경
 	견적 상담 추가할 때 날짜 선택 해당 라이브러리로 통일
 
 결재 승인
-	결재 전부 승인 시에 해당 쿠폰 사용 변경
+	결재 전부 승인 시에 해당 쿠폰 사용 변경 check
 
 스웨거 작성
-	payment_detail controller
+	payment_detail controller check
 
 결재 내용 추가
 	계약생성
@@ -28,6 +28,28 @@ UI 변경
 잔업 서류
 css 수정
 
+견적 상세보기
 
+견적 코드
+수단
+견적시기와 견적을 본 시간
+상담사
+요약
+상담내용
+고객정보
+	기업명, 담당자, 연락처, 이메일, 주소
+quoteId: 162•customerId: 16•channelId: 1
 	
 
+이 이슈, 포폴에서 이렇게 말하면 “상급”
+
+
+
+“Swagger UI 사용 시 브라우저가 자동 요청하는
+정적 리소스(/favicon.ico)가 JWT 필터에 걸리는 문제를 발견했고,
+shouldNotFilter()를 통해 필터 제외 정책을 정교화했습니다.”
+
+“UsernamePasswordAuthenticationFilter를
+전역 필터로 잘못 등록하면서 Swagger 요청까지 가로채는 문제가 있었고,
+setFilterProcessesUrl + addFilterAt으로
+로그인 요청에만 한정되도록 수정했습니다.”
