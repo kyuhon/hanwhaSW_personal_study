@@ -1,0 +1,24 @@
+1.7 d-day 3일차
+
+매니저 ppt
+더미데이터
+계정 체크
+강사님 포함, 4명
+
+일반고객
+	잠재 -> 신규
+
+어느 고객이든 -> 이탈위험고객
+	해지요청, 별점 낮은것
+
+시연영상
+
+
+더미데이터 체크
+
+emp_position_auth
+recommend_coupon
+recommend_promotion
+
+
+
